@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <title>Angular DragDrop</title>
     <link rel="stylesheet" href="css/bootstrap.css"/>
     <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/github.min.css">
+    <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <script data-require="angular.js@1.1.x" src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js" data-semver="1.1.5"></script>
+    <script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
 </head>
 <body>
 <header class="navbar navbar-default navbar-fixed-top" role="banner">
@@ -49,10 +53,9 @@
 
     <h3><strong>Usage</strong></h3>
     <p>
-        <pre class="prettyprint linenums">&lt;ANY ng-bind="{expression}"&gt;
-   ...
-&lt;/ANY&gt;</pre>
+        <div hljs><ANY ui-draggable="{expression}">...</ANY></div>
     </p>
 </div>
+<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
