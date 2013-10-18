@@ -58,14 +58,14 @@ angular.module("ngDragDrop",[])
 
                 function onDragEnter(e) {
                     if(dragChannel === dropChannel){
-                        angular.element(e.target).addClass(dragEnterClass);
+                        element.addClass(dragEnterClass);
                     }
 
                 }
 
                 function onDragLeave(e) {
                     if(dragChannel === dropChannel){
-                        angular.element(e.target).removeClass(dragEnterClass);
+                        element.removeClass(dragEnterClass);
                     }
                 }
 
@@ -95,6 +95,7 @@ angular.module("ngDragDrop",[])
                     scope.$apply(function () {
                         fn(scope, {$data: data, $event: e});
                     });
+                    element.removeClass(dragEnterClass);
                 }
 
 
