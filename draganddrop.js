@@ -24,14 +24,14 @@ angular.module("ngDragDrop",[])
                 });
                 element.bind("dragstart", function (e) {
                     var sendData = angular.toJson(dragData);
-                    var sendChannel = attrs.dragChannel || "defaultchannel"
+                    var sendChannel = attrs.dragChannel || "defaultchannel";
                     e.dataTransfer.setData('drag/text', sendData);
                     $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
 
                 });
 
                 element.bind("dragend", function (e) {
-                    var sendChannel = attrs.dragChannel || "defaultchannel"
+                    var sendChannel = attrs.dragChannel || "defaultchannel";
                     $rootScope.$broadcast("ANGULAR_DRAG_END", sendChannel);
                     if (e.dataTransfer.dropEffect !== "none") {
                         if (attrs.onDropSuccess) {
@@ -127,7 +127,7 @@ angular.module("ngDragDrop",[])
                 });
 
 
-                attr.$observe(attr.dropChannel, function (value) {
+                attr.$observe('dropChannel', function (value) {
                     if (value) {
                         dropChannel = value;
                     }
