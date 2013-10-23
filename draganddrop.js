@@ -25,10 +25,16 @@ angular.module("ngDragDrop",[])
                 element.bind("dragstart", function (e) {
                     var sendData = angular.toJson(dragData);
                     var sendChannel = attrs.dragChannel || "defaultchannel";
-                    e.dataTransfer.setData('drag/text', sendData);
+                    e.dataTransfer.setData("Text", sendData);
                     $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
 
                 });
+
+                //For IE
+                element.bind("selectstart",function() {
+                    this.dragDrop();
+                    return false;
+                }, false);
 
                 element.bind("dragend", function (e) {
                     var sendChannel = attrs.dragChannel || "defaultchannel";
@@ -89,7 +95,7 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
-                    var data = e.dataTransfer.getData("drag/text");
+                    var data = e.dataTransfer.getData("Text");
                     data = angular.fromJson(data);
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
@@ -112,6 +118,8 @@ angular.module("ngDragDrop",[])
                     }
 
                 });
+
+
 
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
