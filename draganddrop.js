@@ -62,19 +62,6 @@ angular.module("ngDragDrop",[])
                 var dragChannel = "";
                 var dragEnterClass = attr.dragEnterClass || "on-drag-enter";
 
-                function onDragEnter(e) {
-                    if(dragChannel === dropChannel){
-                        element.addClass(dragEnterClass);
-                    }
-
-                }
-
-                function onDragLeave(e) {
-                    if(dragChannel === dropChannel){
-                        element.removeClass(dragEnterClass);
-                    }
-                }
-
                 function onDragOver(e) {
 
                     if (e.preventDefault) {
@@ -108,13 +95,11 @@ angular.module("ngDragDrop",[])
                 $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
                     if (dropChannel === channel) {
-                        element.bind("dragenter", onDragEnter);
-
-                        element.bind("dragleave", onDragLeave);
 
                         element.bind("dragover", onDragOver);
 
                         element.bind("drop", onDrop);
+                        element.addClass(dragEnterClass);
                     }
 
                 });
@@ -124,13 +109,11 @@ angular.module("ngDragDrop",[])
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
                     if (dropChannel === channel) {
-                        element.unbind("dragenter", onDragEnter);
-
-                        element.unbind("dragleave", onDragLeave);
 
                         element.unbind("dragover", onDragOver);
 
                         element.unbind("drop", onDrop);
+                        element.removeClass(dragEnterClass);
                     }
                 });
 
