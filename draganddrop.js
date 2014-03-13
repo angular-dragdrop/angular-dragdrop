@@ -24,14 +24,20 @@ angular.module("ngDragDrop",[])
                 });
                 element.bind("dragstart", function (e) {
                     var sendData = angular.toJson(dragData);
-                    var sendChannel = attrs.dragChannel || "defaultchannel"
-                    e.dataTransfer.setData('drag/text', sendData);
+                    var sendChannel = attrs.dragChannel || "defaultchannel";
+                    e.dataTransfer.setData("Text", sendData);
                     $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
 
                 });
 
+                //For IE
+                element.bind("selectstart",function() {
+                    this.dragDrop();
+                    return false;
+                }, false);
+
                 element.bind("dragend", function (e) {
-                    var sendChannel = attrs.dragChannel || "defaultchannel"
+                    var sendChannel = attrs.dragChannel || "defaultchannel";
                     $rootScope.$broadcast("ANGULAR_DRAG_END", sendChannel);
                     if (e.dataTransfer.dropEffect !== "none") {
                         if (attrs.onDropSuccess) {
@@ -56,19 +62,6 @@ angular.module("ngDragDrop",[])
                 var dragChannel = "";
                 var dragEnterClass = attr.dragEnterClass || "on-drag-enter";
 
-                function onDragEnter(e) {
-                    if(dragChannel === dropChannel){
-                        element.addClass(dragEnterClass);
-                    }
-
-                }
-
-                function onDragLeave(e) {
-                    if(dragChannel === dropChannel){
-                        element.removeClass(dragEnterClass);
-                    }
-                }
-
                 function onDragOver(e) {
 
                     if (e.preventDefault) {
@@ -89,7 +82,7 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
-                    var data = e.dataTransfer.getData("drag/text");
+                    var data = e.dataTransfer.getData("Text");
                     data = angular.fromJson(data);
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
@@ -102,32 +95,30 @@ angular.module("ngDragDrop",[])
                 $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
                     if (dropChannel === channel) {
-                        element.bind("dragenter", onDragEnter);
-
-                        element.bind("dragleave", onDragLeave);
 
                         element.bind("dragover", onDragOver);
 
                         element.bind("drop", onDrop);
+                        element.addClass(dragEnterClass);
                     }
 
                 });
+
+
 
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
                     if (dropChannel === channel) {
-                        element.unbind("dragenter", onDragEnter);
-
-                        element.unbind("dragleave", onDragLeave);
 
                         element.unbind("dragover", onDragOver);
 
                         element.unbind("drop", onDrop);
+                        element.removeClass(dragEnterClass);
                     }
                 });
 
 
-                attr.$observe(attr.dropChannel, function (value) {
+                attr.$observe('dropChannel', function (value) {
                     if (value) {
                         dropChannel = value;
                     }

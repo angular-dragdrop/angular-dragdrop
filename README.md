@@ -15,3 +15,7 @@ This implementation is mainly different from the one posted in the blog in the f
 Pull requests are welcome.
 
 [Documentation](http://ganarajpr.github.io/angular-dragdrop/)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ganarajpr/angular-dragdrop/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

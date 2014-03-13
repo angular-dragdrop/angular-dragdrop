@@ -91,7 +91,7 @@
         <ANY ui-draggable="{expression}"
              drag="dragData"
              on-drop-success="onDropSuccessHandler($event)"
-             ui-drag-channel="mydropchannel">...
+             drag-channel="mydropchannel">...
         </ANY>
     </div>
     </p>
@@ -126,7 +126,7 @@
             <td>Takes any <code>$scope</code> function. Can also pass <code>$event</code>.</td>
         </tr>
         <tr>
-            <td>ui-drag-channel</td>
+            <td>drag-channel</td>
             <td><label class="text-muted">string</label></td>
             <td>Takes a string that can be used as the channel name for the dragging operation.
                 Default channel is <code>"defaultchannel"</code>
