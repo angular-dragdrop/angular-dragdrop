@@ -39,7 +39,7 @@ angular.module("ngDragDrop",[])
                 element.bind("dragend", function (e) {
                     var sendChannel = attrs.dragChannel || "defaultchannel";
                     $rootScope.$broadcast("ANGULAR_DRAG_END", sendChannel);
-                    if (e.dataTransfer.dropEffect !== "none") {
+                    if (e.dataTransfer && e.dataTransfer.dropEffect !== "none") {
                         if (attrs.onDropSuccess) {
                             var fn = $parse(attrs.onDropSuccess);
                             scope.$apply(function () {
