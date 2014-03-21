@@ -30,12 +30,6 @@ angular.module("ngDragDrop",[])
 
                 });
 
-                //For IE
-                element.bind("selectstart",function() {
-                    this.dragDrop();
-                    return false;
-                }, false);
-
                 element.bind("dragend", function (e) {
                     var sendChannel = attrs.dragChannel || "defaultchannel";
                     $rootScope.$broadcast("ANGULAR_DRAG_END", sendChannel);
