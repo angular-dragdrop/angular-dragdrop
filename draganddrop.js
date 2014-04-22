@@ -29,7 +29,7 @@ angular.module("ngDragDrop",[])
                     if (dragImage) {
                         var dragImageFn = $parse(dragImage);
                         var dragImageParameters = dragImageFn();
-                        if (dragImageParameters.image) {
+                        if (dragImageParameters && dragImageParameters.image) {
                             var xOffset = dragImageParameters.xOffset || 0,
                                 yOffset = dragImageParameters.yOffset || 0;
                             e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
