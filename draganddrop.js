@@ -27,13 +27,15 @@ angular.module("ngDragDrop",[])
                     var sendChannel = attrs.dragChannel || "defaultchannel";
                     var dragImage = attrs.dragImage || null;
                     if (dragImage) {
-                        var dragImageFn = $parse(dragImage);
-                        var dragImageParameters = dragImageFn();
-                        if (dragImageParameters && dragImageParameters.image) {
-                            var xOffset = dragImageParameters.xOffset || 0,
-                                yOffset = dragImageParameters.yOffset || 0;
-                            e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
-                        }
+                        var dragImageFn = $parse(attrs.dragImage);
+                        scope.$apply(function() {
+                            var dragImageParameters = dragImageFn(scope, {$event: e});
+                            if (dragImageParameters && dragImageParameters.image) {
+                                var xOffset = dragImageParameters.xOffset || 0,
+                                    yOffset = dragImageParameters.yOffset || 0;
+                                e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+                            }
+                        });
                     }
 
                     e.dataTransfer.setData("Text", sendData);
