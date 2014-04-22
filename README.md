@@ -1,5 +1,7 @@
 #Angular-DragDrop
 
+folked from [ganarajpr/angular-dragdrop](https://github.com/ganarajpr/angular-dragdrop), add the support of custom drag image, all credits go to ganarajpr.
+
 Angular-DragDrop is a native HTML5 Drag and Drop directive written in pure Angular with no dependency on Jquery. 
 
 This is based on the work done by Jason Turim. While this [blog post](http://jasonturim.wordpress.com/2013/09/01/angularjs-drag-and-drop/) was the inspiration for creating a native Drag and Drop solution, the intention was to create something that was more generic. 
