@@ -22,25 +22,46 @@ angular.module("ngDragDrop",[])
                 scope.$watch(attrs.drag, function (newValue) {
                     dragData = newValue;
                 });
+                var dragHandleClass = attrs.dragHandleClass || "drag-handle",
+                    dragHandles = element.find('.' + dragHandleClass),
+                    dragTarget;
+
+                element.bind("mousedown", function (e) {
+                    dragTarget = e.target;
+                });
+
                 element.bind("dragstart", function (e) {
-                    var sendData = angular.toJson(dragData);
-                    var sendChannel = attrs.dragChannel || "defaultchannel";
-                    var dragImage = attrs.dragImage || null;
-                    if (dragImage) {
-                        var dragImageFn = $parse(attrs.dragImage);
-                        scope.$apply(function() {
-                            var dragImageParameters = dragImageFn(scope, {$event: e});
-                            if (dragImageParameters && dragImageParameters.image) {
-                                var xOffset = dragImageParameters.xOffset || 0,
-                                    yOffset = dragImageParameters.yOffset || 0;
-                                e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
-                            }
-                        });
+                    var isDragAllowed = false;
+
+                    for (var i = 0, dragHandle; dragHandle = dragHandles[i++];) {
+                        if (dragHandle == dragTarget) {
+                            isDragAllowed = true;
+                            break;
+                        }
                     }
 
-                    e.dataTransfer.setData("Text", sendData);
-                    $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
+                    if (isDragAllowed) {
+                        var sendData = angular.toJson(dragData);
+                        var sendChannel = attrs.dragChannel || "defaultchannel";
+                        var dragImage = attrs.dragImage || null;
+                        if (dragImage) {
+                            var dragImageFn = $parse(attrs.dragImage);
+                            scope.$apply(function() {
+                                var dragImageParameters = dragImageFn(scope, {$event: e});
+                                if (dragImageParameters && dragImageParameters.image) {
+                                    var xOffset = dragImageParameters.xOffset || 0,
+                                        yOffset = dragImageParameters.yOffset || 0;
+                                    e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+                                }
+                            });
+                        }
 
+                        e.dataTransfer.setData("Text", sendData);
+                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
+                    }
+                    else {
+                        e.preventDefault();
+                    }
                 });
 
                 element.bind("dragend", function (e) {
