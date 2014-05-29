@@ -62,6 +62,7 @@ angular.module("ngDragDrop",[])
                         }
 
                         e.dataTransfer.setData("text/plain", sendData);
+                        e.dataTransfer.effectAllowed = "copyMove";
                         $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
                     }
                     else {
@@ -106,7 +107,8 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation();
                     }
-                    e.dataTransfer.dropEffect = 'move';
+
+                    e.dataTransfer.dropEffect = e.shiftKey ? 'copy' : 'move';
                     return false;
                 }
 
