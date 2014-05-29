@@ -61,7 +61,7 @@ angular.module("ngDragDrop",[])
                             });
                         }
 
-                        e.dataTransfer.setData("Text", sendData);
+                        e.dataTransfer.setData("text/plain", sendData);
                         $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
                     }
                     else {
@@ -130,7 +130,7 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
-                    var data = e.dataTransfer.getData("Text");
+                    var data = e.dataTransfer.getData("text/plain");
                     data = angular.fromJson(data);
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
