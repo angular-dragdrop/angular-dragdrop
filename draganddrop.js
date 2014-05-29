@@ -5,15 +5,16 @@
  * Time: 11:27
  * To change this template use File | Settings | File Templates.
  */
+if (window.jQuery && (-1 == window.jQuery.event.props.indexOf("dataTransfer"))) {
+    window.jQuery.event.props.push("dataTransfer");
+}
+
 angular.module("ngDragDrop",[])
     .directive("uiDraggable", [
         '$parse',
         '$rootScope',
         function ($parse, $rootScope) {
             return function (scope, element, attrs) {
-                if (window.jQuery && !window.jQuery.event.props.dataTransfer) {
-                    window.jQuery.event.props.push('dataTransfer');
-                }
                 element.attr("draggable", false);
                 attrs.$observe("uiDraggable", function (newValue) {
                     element.attr("draggable", newValue);
