@@ -139,10 +139,21 @@ angular.module("ngDragDrop",[])
                     element.removeClass(dragEnterClass);
                 }
 
+                function isDragChannelAccepted(dragChannel, dropChannel) {
+                    if (dropChannel === "*") {
+                        return true;
+                    }
+
+                    var channelMatchPattern = new RegExp("(\\s|[,])+(" + dragChannel + ")(\\s|[,])+", "i");
+                    console.log('channel match', dragChannel, dropChannel, channelMatchPattern);
+
+                    return channelMatchPattern.test("," + dropChannel + ",");
+                }
 
                 $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
-                    if (dropChannel === channel) {
+//                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(dragChannel, dropChannel)) {
 
                         element.bind("dragover", onDragOver);
                         element.bind("dragenter", onDragEnter);
@@ -158,7 +169,8 @@ angular.module("ngDragDrop",[])
 
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
-                    if (dropChannel === channel) {
+//                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(channel, dropChannel)) {
 
                         element.unbind("dragover", onDragOver);
                         element.unbind("dragenter", onDragEnter);
@@ -172,7 +184,8 @@ angular.module("ngDragDrop",[])
 
 
                 $rootScope.$on("ANGULAR_HOVER", function (e, channel) {
-                    if (dropChannel === channel) {
+//                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(channel, dropChannel)) {
                       element.removeClass(dragHoverClass);
                     }
                 });
