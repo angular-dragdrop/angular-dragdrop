@@ -20,9 +20,13 @@ angular.module("ngDragDrop",[])
                     element.attr("draggable", newValue);
                 });
                 var dragData = "";
-                scope.$watch(attrs.drag, function (newValue) {
-                    dragData = newValue;
-                });
+
+                if (attrs.drag) {
+                    scope.$watch(attrs.drag, function (newValue) {
+                        dragData = newValue || "";
+                    });
+                }
+
                 var dragHandleClass = attrs.dragHandleClass || "drag-handle",
                     dragHandles = element.find('.' + dragHandleClass),
                     dragTarget;
