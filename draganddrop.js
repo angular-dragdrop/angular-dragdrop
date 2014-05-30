@@ -154,7 +154,6 @@ angular.module("ngDragDrop",[])
 
                 $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
-//                    if (dropChannel === channel) {
                     if (isDragChannelAccepted(dragChannel, dropChannel)) {
 
                         element.bind("dragover", onDragOver);
@@ -171,7 +170,6 @@ angular.module("ngDragDrop",[])
 
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
-//                    if (dropChannel === channel) {
                     if (isDragChannelAccepted(channel, dropChannel)) {
 
                         element.unbind("dragover", onDragOver);
@@ -186,7 +184,6 @@ angular.module("ngDragDrop",[])
 
 
                 $rootScope.$on("ANGULAR_HOVER", function (e, channel) {
-//                    if (dropChannel === channel) {
                     if (isDragChannelAccepted(channel, dropChannel)) {
                       element.removeClass(dragHoverClass);
                     }
