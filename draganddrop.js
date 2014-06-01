@@ -15,11 +15,17 @@ angular.module("ngDragDrop",[])
         '$rootScope',
         function ($parse, $rootScope) {
             return function (scope, element, attrs) {
+                var dragData = "",
+                    isDragHandleUsed = false,
+                    dragHandleClass,
+                    dragHandles,
+                    dragTarget;
+
                 element.attr("draggable", false);
+
                 attrs.$observe("uiDraggable", function (newValue) {
                     element.attr("draggable", newValue);
                 });
-                var dragData = "";
 
                 if (attrs.drag) {
                     scope.$watch(attrs.drag, function (newValue) {
@@ -27,23 +33,18 @@ angular.module("ngDragDrop",[])
                     });
                 }
 
-                var dragHandleClass = attrs.dragHandleClass || "drag-handle",
-                    dragHandles = element.find('.' + dragHandleClass),
-                    dragTarget;
+                if (angular.isString(attrs.dragHandleClass)) {
+                    isDragHandleUsed = true;
+                    dragHandleClass = attrs.dragHandleClass.trim() || "drag-handle";
+                    dragHandles = element.find('.' + dragHandleClass).toArray();
 
-                element.bind("mousedown", function (e) {
-                    dragTarget = e.target;
-                });
+                    element.bind("mousedown", function (e) {
+                        dragTarget = e.target;
+                    });
+                }
 
                 element.bind("dragstart", function (e) {
-                    var isDragAllowed = false;
-
-                    for (var i = 0, dragHandle; dragHandle = dragHandles[i++];) {
-                        if (dragHandle == dragTarget) {
-                            isDragAllowed = true;
-                            break;
-                        }
-                    }
+                    var isDragAllowed = !isDragHandleUsed || -1 != dragHandles.indexOf(dragTarget);
 
                     if (isDragAllowed) {
                         var sendData = angular.toJson(dragData);
@@ -99,7 +100,6 @@ angular.module("ngDragDrop",[])
                 var dragHoverClass = attr.dragHoverClass || "on-drag-hover";
 
                 function onDragOver(e) {
-
                     if (e.preventDefault) {
                         e.preventDefault(); // Necessary. Allows us to drop.
                     }
@@ -147,7 +147,6 @@ angular.module("ngDragDrop",[])
                     }
 
                     var channelMatchPattern = new RegExp("(\\s|[,])+(" + dragChannel + ")(\\s|[,])+", "i");
-                    console.log('channel match', dragChannel, dropChannel, channelMatchPattern);
 
                     return channelMatchPattern.test("," + dropChannel + ",");
                 }
