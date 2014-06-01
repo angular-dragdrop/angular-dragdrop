@@ -67,6 +67,14 @@
     <p>The <code>drag</code> property is used to assign the data that needs to be passed along with the dragging
         element.</p>
     <hr>
+    <h4 class="text-info"><em>drag-handle-class</em></h4>
+
+    <p>The class used to mark child elements of draggable object to be used as drag handle. Default class name is
+        <code>drag-handle</code>.</p>
+    <div>
+        <strong>NOTE</strong>: If attribute is not present drag handle feature is not active.
+    </div>
+    <hr>
     <h4 class="text-info"><em>on-drop-success</em></h4>
 
     <p>The <code>on-drop-success</code> attribute takes a function. We can consider this to be an on-drop-success
@@ -75,7 +83,7 @@
         the drop site.
 
     <div>
-        <strong>NOTE</strong> : This callback function is only called when the drop succeeds.
+        <strong>NOTE</strong>: This callback function is only called when the drop succeeds.
     </div>
     You can request the <code>drag-end</code> event ( very similiar to requesting the click event in
     <code>ng-click</code> )
@@ -90,6 +98,7 @@
     <div hljs>
         <ANY ui-draggable="{expression}"
              drag="dragData"
+             drag-handle-class="my-drag-handle"
              on-drop-success="onDropSuccessHandler($event)"
              drag-channel="mydropchannel">...
         </ANY>
@@ -119,6 +128,13 @@
             <td>drag</td>
             <td><label class="text-muted">variable</label></td>
             <td>Takes any JSON convertable <code>$scope</code> variable.</td>
+        </tr>
+        <tr>
+            <td>drag-handle-class</td>
+            <td><label class="text-muted">string</label></td>
+            <td>Class name used to mark child elements of draggable object to be used as drag handle. <br/>If attribute
+                is not present drag handle feature is not used. <br/>If attribute is present but have no value
+                <code>drag-handle</code> used as default.</td>
         </tr>
         <tr>
             <td>on-drop-success</td>
@@ -178,8 +194,13 @@
     <h4 class="text-info"><em>drop-channel</em></h4>
 
     <p>The channel that the drop site accepts. The dragged element should have the same channel as this drop site for it
-        to be
-        droppable at this location.</p>
+        to be droppable at this location. It is possible to provide comma separated list of channels.
+
+        <div>
+            <strong>NOTE</strong>: Also special value of <code>drag-channel</code> attribute is available to accept
+            dragged element with any channel value — <code>*</code>
+        </div>
+    </p>
 
     <hr>
 
@@ -224,16 +245,19 @@
         <tr>
             <td>drop-channel</td>
             <td><label class="text-muted">expression</label></td>
-            <td>The channel on which the drop has to listen for drag events.</td>
+            <td>The channel on which the drop has to listen for drag events. <br/>
+            Single value, comma separated list or special value <code>*</code> are possible</td>
         </tr>
         <tr>
             <td>drag-enter-class</td>
             <td><label class="text-muted">string</label></td>
-            <td>A class name that will be put on the droppable element when the dragged objects enters its boundaries.</td>
+            <td>A class name that will be put on the droppable element when the dragged objects enters its boundaries.
+                <br/>Default class name is <code>on-drag-enter</code>.</td>
         </tr>
             <td>drag-hover-class</td>
             <td><label class="text-muted">string</label></td>
-            <td>A class name that will be put on the drop area when an element is dragged onto it.</td>
+            <td>A class name that will be put on the drop area when an element is dragged onto it. <br/>Default class
+                name is <code>on-drag-hover</code>.</td>
         </tr>
         </tbody>
     </table>
