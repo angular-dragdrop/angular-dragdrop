@@ -5,42 +5,70 @@
  * Time: 11:27
  * To change this template use File | Settings | File Templates.
  */
+if (window.jQuery && (-1 == window.jQuery.event.props.indexOf("dataTransfer"))) {
+    window.jQuery.event.props.push("dataTransfer");
+}
+
 angular.module("ngDragDrop",[])
     .directive("uiDraggable", [
         '$parse',
         '$rootScope',
         function ($parse, $rootScope) {
             return function (scope, element, attrs) {
-                if (window.jQuery && !window.jQuery.event.props.dataTransfer) {
-                    window.jQuery.event.props.push('dataTransfer');
-                }
+                var dragData = "",
+                    isDragHandleUsed = false,
+                    dragHandleClass,
+                    dragHandles,
+                    dragTarget;
+
                 element.attr("draggable", false);
+
                 attrs.$observe("uiDraggable", function (newValue) {
                     element.attr("draggable", newValue);
                 });
-                var dragData = "";
-                scope.$watch(attrs.drag, function (newValue) {
-                    dragData = newValue;
-                });
+
+                if (attrs.drag) {
+                    scope.$watch(attrs.drag, function (newValue) {
+                        dragData = newValue || "";
+                    });
+                }
+
+                if (angular.isString(attrs.dragHandleClass)) {
+                    isDragHandleUsed = true;
+                    dragHandleClass = attrs.dragHandleClass.trim() || "drag-handle";
+                    dragHandles = element.find('.' + dragHandleClass).toArray();
+
+                    element.bind("mousedown", function (e) {
+                        dragTarget = e.target;
+                    });
+                }
+
                 element.bind("dragstart", function (e) {
-                    var sendData = angular.toJson(dragData);
-                    var sendChannel = attrs.dragChannel || "defaultchannel";
-                    var dragImage = attrs.dragImage || null;
-                    if (dragImage) {
-                        var dragImageFn = $parse(attrs.dragImage);
-                        scope.$apply(function() {
-                            var dragImageParameters = dragImageFn(scope, {$event: e});
-                            if (dragImageParameters && dragImageParameters.image) {
-                                var xOffset = dragImageParameters.xOffset || 0,
-                                    yOffset = dragImageParameters.yOffset || 0;
-                                e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
-                            }
-                        });
+                    var isDragAllowed = !isDragHandleUsed || -1 != dragHandles.indexOf(dragTarget);
+
+                    if (isDragAllowed) {
+                        var sendData = angular.toJson(dragData);
+                        var sendChannel = attrs.dragChannel || "defaultchannel";
+                        var dragImage = attrs.dragImage || null;
+                        if (dragImage) {
+                            var dragImageFn = $parse(attrs.dragImage);
+                            scope.$apply(function() {
+                                var dragImageParameters = dragImageFn(scope, {$event: e});
+                                if (dragImageParameters && dragImageParameters.image) {
+                                    var xOffset = dragImageParameters.xOffset || 0,
+                                        yOffset = dragImageParameters.yOffset || 0;
+                                    e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+                                }
+                            });
+                        }
+
+                        e.dataTransfer.setData("text/plain", sendData);
+                        e.dataTransfer.effectAllowed = "copyMove";
+                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
                     }
-
-                    e.dataTransfer.setData("Text", sendData);
-                    $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
-
+                    else {
+                        e.preventDefault();
+                    }
                 });
 
                 element.bind("dragend", function (e) {
@@ -72,7 +100,6 @@ angular.module("ngDragDrop",[])
                 var dragHoverClass = attr.dragHoverClass || "on-drag-hover";
 
                 function onDragOver(e) {
-
                     if (e.preventDefault) {
                         e.preventDefault(); // Necessary. Allows us to drop.
                     }
@@ -80,7 +107,8 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation();
                     }
-                    e.dataTransfer.dropEffect = 'move';
+
+                    e.dataTransfer.dropEffect = e.shiftKey ? 'copy' : 'move';
                     return false;
                 }
 
@@ -104,7 +132,7 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
-                    var data = e.dataTransfer.getData("Text");
+                    var data = e.dataTransfer.getData("text/plain");
                     data = angular.fromJson(data);
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
@@ -113,10 +141,19 @@ angular.module("ngDragDrop",[])
                     element.removeClass(dragEnterClass);
                 }
 
+                function isDragChannelAccepted(dragChannel, dropChannel) {
+                    if (dropChannel === "*") {
+                        return true;
+                    }
+
+                    var channelMatchPattern = new RegExp("(\\s|[,])+(" + dragChannel + ")(\\s|[,])+", "i");
+
+                    return channelMatchPattern.test("," + dropChannel + ",");
+                }
 
                 $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
-                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(dragChannel, dropChannel)) {
 
                         element.bind("dragover", onDragOver);
                         element.bind("dragenter", onDragEnter);
@@ -132,7 +169,7 @@ angular.module("ngDragDrop",[])
 
                 $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
-                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(channel, dropChannel)) {
 
                         element.unbind("dragover", onDragOver);
                         element.unbind("dragenter", onDragEnter);
@@ -146,7 +183,7 @@ angular.module("ngDragDrop",[])
 
 
                 $rootScope.$on("ANGULAR_HOVER", function (e, channel) {
-                    if (dropChannel === channel) {
+                    if (isDragChannelAccepted(channel, dropChannel)) {
                       element.removeClass(dragHoverClass);
                     }
                 });
