@@ -123,6 +123,7 @@ angular.module("ngDragDrop",[])
                   dragging--;
                   if (dragging == 0) {
                     element.removeClass(dragHoverClass);
+                    element.removeClass(dragEnterClass);
                   }
                 }
 
@@ -158,7 +159,7 @@ angular.module("ngDragDrop",[])
                     return channelMatchPattern.test("," + dropChannel + ",");
                 }
 
-                $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
+                var deregisterDragStart = $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
                     if (isDragChannelAccepted(channel, dropChannel)) {
 
@@ -173,7 +174,7 @@ angular.module("ngDragDrop",[])
 
 
 
-                $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
+                var deregisterDragEnd = $rootScope.$on("ANGULAR_DRAG_END", function (e, channel) {
                     dragChannel = "";
                     if (isDragChannelAccepted(channel, dropChannel)) {
 
@@ -188,7 +189,7 @@ angular.module("ngDragDrop",[])
                 });
 
 
-                $rootScope.$on("ANGULAR_HOVER", function (e, channel) {
+                var deregisterDragHover = $rootScope.$on("ANGULAR_HOVER", function (e, channel) {
                     if (isDragChannelAccepted(channel, dropChannel)) {
                       element.removeClass(dragHoverClass);
                     }
@@ -196,9 +197,9 @@ angular.module("ngDragDrop",[])
                 
                 
                 scope.$on('$destroy', function () {
-                    $rootScope.$$listeners.ANGULAR_DRAG_END = [];
-                    $rootScope.$$listeners.ANGULAR_DRAG_START = [];
-                    $rootScope.$$listeners.ANGULAR_DRAG_HOVER = [];
+                    deregisterDragStart();
+                    deregisterDragEnd();
+                    deregisterDragHover();
                 });
 
 
