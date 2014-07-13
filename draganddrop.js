@@ -5,6 +5,17 @@
  * Time: 11:27
  * To change this template use File | Settings | File Templates.
  */
+ 
+(function(){
+
+function isDnDsSupported(){
+    return 'draggable' in document.createElement("span");
+}    
+
+if(!isDnDsSupported()){
+    return;
+}
+ 
 if (window.jQuery && (-1 == window.jQuery.event.props.indexOf("dataTransfer"))) {
     window.jQuery.event.props.push("dataTransfer");
 }
@@ -213,3 +224,6 @@ angular.module("ngDragDrop",[])
             };
         }
     ]);
+    
+    
+}());
