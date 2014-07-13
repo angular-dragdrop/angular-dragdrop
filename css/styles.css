@@ -32,3 +32,19 @@ body {
 }
 
 
+.topRow{
+    margin-bottom : 30px;
+}
+
+
+.on-drag-enter{
+    background-color : #aaaaaa;
+}
+
+.on-drag-hover:before {
+  content: 'Drop him gently';
+  display: block;
+  color: white;
+  font-size: x-large;
+  font-weight: 800;
+}

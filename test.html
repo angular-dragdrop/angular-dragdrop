@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularJS Plunker</title>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="css/styles.css" />
+    <script data-require="angular.js@1.1.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.js" data-semver="1.1.5"></script>
+    <script src="http://pc035860.github.io/angular-highlightjs/angular-highlightjs.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="draganddrop.js"></script>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body >
+    <div class="container">
+        <div class="row topRow">
+            <h4 class="heading">
+                Drag and drop between the two lists.
+            </h4>
+        </div>
+        
+        <div class="row" ng-controller="MainCtrl">
+            <div class="col-xs-6">
+                <ul ui-on-Drop="onDrop($event,$data,men)" drop-channel="beasts,priests">
+                    <li ui-draggable="false" drag="man" drag-channel="beasts"
+                    
+                    on-drop-success="dropSuccessHandler($event,$index,men)"
+                    ng-repeat="man in men track by $index">
+                        {{man}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <ul ui-on-Drop="onDrop($event,$data,women)" drop-channel="beasts">
+                    <li ui-draggable="true" drag="woman" drag-channel="beasts"
+                    on-drop-success="dropSuccessHandler($event,$index,women)"
+                    ng-repeat="woman in women track by $index">
+                        {{woman}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="row" ng-controller="MainCtrl">
+            <div class="col-xs-6">
+                <ul ui-on-Drop="onDrop($event,$data,men)" drop-channel="priests">
+                    <li ui-draggable="true" drag="man" drag-channel="priests"
+                    on-drop-success="dropSuccessHandler($event,$index,men)"
+                    ng-repeat="man in men track by $index">
+                        {{man}}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-xs-6">
+                <ul ui-on-Drop="onDrop($event,$data,women)" drop-channel="priests">
+                    <li ui-draggable="true" drag="woman" drag-channel="priests"
+                    on-drop-success="dropSuccessHandler($event,$index,women)"
+                    ng-repeat="woman in women track by $index">
+                        {{woman}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </body>
+
+</html>
