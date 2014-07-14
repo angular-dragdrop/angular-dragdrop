@@ -47,8 +47,8 @@ angular.module("ngDragDrop",[])
                     var isDragAllowed = !isDragHandleUsed || -1 != dragHandles.indexOf(dragTarget);
 
                     if (isDragAllowed) {
-                        var sendData = angular.toJson(dragData);
                         var sendChannel = attrs.dragChannel || "defaultchannel";
+                        var sendData = angular.toJson({ data: dragData, channel: sendChannel });
                         var dragImage = attrs.dragImage || null;
                         if (dragImage) {
                             var dragImageFn = $parse(attrs.dragImage);
@@ -63,7 +63,6 @@ angular.module("ngDragDrop",[])
                         }
 
                         e.dataTransfer.setData("Text", sendData);
-                        e.dataTransfer.setData("Channel", sendChannel);                        
                         e.dataTransfer.effectAllowed = "copyMove";
                         $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
                     }
@@ -133,13 +132,12 @@ angular.module("ngDragDrop",[])
                     if (e.stopPropagation) {
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
- 
-                    var channel = e.dataTransfer.getData("Channel");                   
-                    var data = angular.fromJson(e.dataTransfer.getData("Text"));
+
+                    var textData = angular.fromJson(e.dataTransfer.getData("Text"));
 
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
-                        fn(scope, {$data: data, $event: e, $channel: channel});
+                        fn(scope, {$data: textData.data, $event: e, $channel: textData.channel});
                     });
                     element.removeClass(dragEnterClass);
                 }
