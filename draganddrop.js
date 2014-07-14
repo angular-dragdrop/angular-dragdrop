@@ -133,11 +133,11 @@ angular.module("ngDragDrop",[])
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
 
-                    var textData = angular.fromJson(e.dataTransfer.getData("Text"));
+                    var sendData = angular.fromJson(e.dataTransfer.getData("Text"));
 
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
-                        fn(scope, {$data: textData.data, $event: e, $channel: textData.channel});
+                        fn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
                     });
                     element.removeClass(dragEnterClass);
                 }
