@@ -133,7 +133,8 @@ angular.module("ngDragDrop",[])
                         e.stopPropagation(); // Necessary. Allows us to drop.
                     }
 
-                    var sendData = angular.fromJson(e.dataTransfer.getData("Text"));
+                    var sendData = e.dataTransfer.getData("Text");
+                    sendData = angular.fromJson(sendData);
 
                     var fn = $parse(attr.uiOnDrop);
                     scope.$apply(function () {
