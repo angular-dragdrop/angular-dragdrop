@@ -20,6 +20,8 @@ if (window.jQuery && (-1 == window.jQuery.event.props.indexOf("dataTransfer"))) 
     window.jQuery.event.props.push("dataTransfer");
 }
 
+var currentData;
+
 angular.module("ngDragDrop",[])
     .directive("uiDraggable", [
         '$parse',
@@ -80,6 +82,7 @@ angular.module("ngDragDrop",[])
                         }
 
                         e.dataTransfer.setData("Text", sendData);
+                        currentData = angular.fromJson(sendData);
                         e.dataTransfer.effectAllowed = "copyMove";
                         $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel);
                     }
@@ -175,6 +178,13 @@ angular.module("ngDragDrop",[])
                 var deregisterDragStart = $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
                     if (isDragChannelAccepted(channel, dropChannel)) {
+                        if (attr.dropValidate) {
+                            var validateFn = $parse(attr.dropValidate);
+                            var valid = validateFn(scope, {$data: currentData.data, $channel: currentData.channel});
+                            if (!valid) {
+                                return;
+                            }
+                        }
 
                         element.bind("dragover", onDragOver);
                         element.bind("dragenter", onDragEnter);
