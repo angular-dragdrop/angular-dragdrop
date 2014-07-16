@@ -204,6 +204,19 @@
 
     <hr>
 
+    <h4 class="text-info"><em>drop-validate</em></h4>
+
+    <p>Extra validation that makes sure that the drop site accepts the dragged element beyond having the same channel. If
+       not defined, no extra validation is made.
+
+        <div>
+            <strong>NOTE</strong>: This callback function is called only if the channel condition is met, when the element
+            starts being dragged
+        </div>
+    </p>
+
+    <hr>
+
     <h4 class="text-info"><em>drag-enter-class</em></h4>
 
     <p>The class that will be added to the the droppable element when a dragged element ( which is droppable )
@@ -248,6 +261,12 @@
             <td>The channel on which the drop has to listen for drag events. <br/>
             Single value, comma separated list or special value <code>*</code> are possible</td>
         </tr>
+        <tr>
+            <td>drop-validate</td>
+            <td><label class="text-muted">function</label></td>
+            <td>Takes any <code>$scope</code> function. Can also pass <code>$data</code> and <code>$channel</code>
+            </td>
+        </tr>        
         <tr>
             <td>drag-enter-class</td>
             <td><label class="text-muted">string</label></td>
