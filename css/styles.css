@@ -32,3 +32,20 @@ body {
 }
 
 
+.topRow{
+    margin-bottom : 30px;
+}
+
+
+.on-drag-enter{
+    background-color : #aaaaaa;
+}
+
+
+.on-drag-enter{
+    background-color : #aaaaaa;
+}
+
+.bg-info{
+    background-color : #aaaaaa;
+}
