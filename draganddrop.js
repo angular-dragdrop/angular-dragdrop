@@ -163,6 +163,7 @@ angular.module("ngDragDrop",[])
                         fn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
                     });
                     element.removeClass(dragEnterClass);
+                    dragging = 0;
                 }
 
                 function isDragChannelAccepted(dragChannel, dropChannel) {
