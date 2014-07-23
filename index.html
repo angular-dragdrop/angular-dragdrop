@@ -89,6 +89,23 @@
     <code>ng-click</code> )
     by passing <code>$event</code> in the event handler.
     </p>
+    
+    <hr>
+    <h4 class="text-info"><em>on-drop-failure</em></h4>
+
+    <p>The <code>on-drop-failure</code> attribute takes a function. We can consider this to be an on-drop-failure
+        handler function.
+        This can be useful if you need to do some post processing after the dragged element is dropped unsuccessfully on
+        any drop site.
+
+    <div>
+        <strong>NOTE</strong>: This callback function is only called when the drop fails.
+    </div>
+    You can request the <code>drag-end</code> event ( very similiar to requesting the click event in
+    <code>ng-click</code> )
+    by passing <code>$event</code> in the event handler.
+    </p>
+
 
     <hr>
     <h3 class="heading"><strong>Usage</strong></h3>
@@ -100,6 +117,7 @@
              drag="dragData"
              drag-handle-class="my-drag-handle"
              on-drop-success="onDropSuccessHandler($event)"
+             on-drop-failure="onDropFailureHandler($event)"
              drag-channel="mydropchannel">...
         </ANY>
     </div>
@@ -138,6 +156,11 @@
         </tr>
         <tr>
             <td>on-drop-success</td>
+            <td><label class="text-muted">function</label></td>
+            <td>Takes any <code>$scope</code> function. Can also pass <code>$event</code>.</td>
+        </tr>
+        <tr>
+            <td>on-drop-failure</td>
             <td><label class="text-muted">function</label></td>
             <td>Takes any <code>$scope</code> function. Can also pass <code>$event</code>.</td>
         </tr>
