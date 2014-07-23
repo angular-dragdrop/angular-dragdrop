@@ -192,6 +192,7 @@ angular.module("ngDragDrop",[])
                         element.bind("dragleave", onDragLeave);
 
                         element.bind("drop", onDrop);
+                        element.addClass(dragEnterClass);
                     }
 
                 });
