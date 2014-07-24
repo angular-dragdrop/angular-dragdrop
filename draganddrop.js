@@ -144,7 +144,6 @@ angular.module("ngDragDrop",[])
                   dragging--;
                   if (dragging == 0) {
                     element.removeClass(dragHoverClass);
-                    element.removeClass(dragEnterClass);
                   }
                 }
 
@@ -199,6 +198,7 @@ angular.module("ngDragDrop",[])
                         element.bind("dragleave", onDragLeave);
 
                         element.bind("drop", onDrop);
+                        element.addClass(dragEnterClass);
                     }
 
                 });
