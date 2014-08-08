@@ -149,7 +149,7 @@ angular.module("ngDragDrop",[])
 
                 function onDragEnter(e) {
                     dragging++;
-                    $rootScope.$broadcast("ANGULAR_HOVER", dropChannel);
+                    $rootScope.$broadcast("ANGULAR_HOVER", dragChannel);
                     element.addClass(dragHoverClass);
                 }
 
