@@ -74,6 +74,13 @@ angular.module("ngDragDrop",[])
                             scope.$apply(function () {
                                 fn(scope, {$event: e});
                             });
+                        } else {
+                            if (attrs.onDropFailure) {
+                                var fn = $parse(attrs.onDropFailure);
+                                scope.$apply(function () {
+                                    fn(scope, {$event: e});
+                                });
+                            }
                         }
                     }
                 }
