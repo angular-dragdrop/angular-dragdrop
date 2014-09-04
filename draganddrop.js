@@ -187,14 +187,29 @@ angular.module("ngDragDrop",[])
                     return channelMatchPattern.test("," + dropChannel + ",");
                 }
 
-                var deregisterDragStart = $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
+                function preventNativeDnD(e) {
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+                    e.dataTransfer.dropEffect = "none";
+                    return false;
+                }
+
+			var deregisterDragStart = $rootScope.$on("ANGULAR_DRAG_START", function (event, channel) {
                     dragChannel = channel;
                     if (isDragChannelAccepted(channel, dropChannel)) {
                         if (attr.dropValidate) {
                             var validateFn = $parse(attr.dropValidate);
                             var valid = validateFn(scope, {$data: currentData.data, $channel: currentData.channel});
                             if (!valid) {
-                                return;
+                                element.bind("dragover", preventNativeDnD);
+                                element.bind("dragenter", preventNativeDnD);
+                                element.bind("dragleave", preventNativeDnD);
+                                element.bind("drop", preventNativeDnD);
+								return;
                             }
                         }
 
@@ -205,6 +220,12 @@ angular.module("ngDragDrop",[])
                         element.bind("drop", onDrop);
                         element.addClass(dragEnterClass);
                     }
+					else {
+					    element.bind("dragover", preventNativeDnD);
+					    element.bind("dragenter", preventNativeDnD);
+					    element.bind("dragleave", preventNativeDnD);
+					    element.bind("drop", preventNativeDnD);
+					}
 
                 });
 
@@ -222,6 +243,11 @@ angular.module("ngDragDrop",[])
                         element.removeClass(dragHoverClass);
                         element.removeClass(dragEnterClass);
                     }
+					
+					element.unbind("dragover", preventNativeDnD);
+					element.unbind("dragenter", preventNativeDnD);
+					element.unbind("dragleave", preventNativeDnD);
+					element.unbind("drop", preventNativeDnD);
                 });
 
 
