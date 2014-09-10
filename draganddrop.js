@@ -26,7 +26,8 @@ angular.module("ngDragDrop",[])
     .directive("uiDraggable", [
         '$parse',
         '$rootScope',
-        function ($parse, $rootScope) {
+        '$dragImage',
+        function ($parse, $rootScope, $dragImage) {
             return function (scope, element, attrs) {
                 var dragData = "",
                     isDragHandleUsed = false,
@@ -101,10 +102,15 @@ angular.module("ngDragDrop",[])
                             var dragImageFn = $parse(attrs.dragImage);
                             scope.$apply(function() {
                                 var dragImageParameters = dragImageFn(scope, {$event: e});
-                                if (dragImageParameters && dragImageParameters.image) {
-                                    var xOffset = dragImageParameters.xOffset || 0,
-                                        yOffset = dragImageParameters.yOffset || 0;
-                                    e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+                                if (dragImageParameters) {
+                                    if (angular.isString(dragImageParameters)) {
+                                        dragImageParameters = $dragImage.generate(dragImageParameters);
+                                    }
+                                    if (dragImageParameters.image) {
+                                        var xOffset = dragImageParameters.xOffset || 0,
+                                            yOffset = dragImageParameters.yOffset || 0;
+                                        e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+                                    }
                                 }
                             });
                         }
@@ -280,8 +286,8 @@ angular.module("ngDragDrop",[])
         width: 200,
         padding: 10,
         font: 'bold 11px Arial',
-        fontColor: '#93a1a1',
-        backgroundColor: '#eee8d5',
+        fontColor: '#eee8d5',
+        backgroundColor: '#93a1a1',
         xOffset: 0,
         yOffset: 0
     })
@@ -295,7 +301,7 @@ angular.module("ngDragDrop",[])
                 if (width < config.width) {
                     return text;
                 }
-                while (width + config.padding > max_width) {
+                while (width + config.padding > config.width) {
                     text = text.substring(0, text.length - 1);
                     width = canvas.measureText(text + ELLIPSIS).width;
                 }
