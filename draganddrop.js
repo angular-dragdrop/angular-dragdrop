@@ -293,10 +293,10 @@ angular.module("ngDragDrop",[])
     })
     .service("$dragImage", [
         '$dragImageConfig',
-        function (config) {
+        function (defaultConfig) {
             var ELLIPSIS = '…';
 
-            function fitString(canvas, text) {
+            function fitString(canvas, text, config) {
                 var width = canvas.measureText(text).width;
                 if (width < config.width) {
                     return text;
@@ -308,7 +308,8 @@ angular.module("ngDragDrop",[])
                 return text + ELLIPSIS;
             };
 
-            this.generate = function (text) {
+            this.generate = function (text, options) {
+                var config = angular.extend({}, defaultConfig, options || {});
                 var el = document.createElement('canvas');
 
                 el.height = config.height;
@@ -321,7 +322,7 @@ angular.module("ngDragDrop",[])
                 canvas.font = config.font;
                 canvas.fillStyle = config.fontColor;
 
-                var title = fitString(canvas, text);
+                var title = fitString(canvas, text, config);
                 canvas.fillText(title, 4, config.padding + 4);
 
                 var image = new Image();
