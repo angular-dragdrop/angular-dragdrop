@@ -32,7 +32,6 @@ angular.module("ngDragDrop",[])
                 var dragData = "",
                     isDragHandleUsed = false,
                     dragHandleClass,
-                    dragHandles,
                     dragTarget;
 
                 element.attr("draggable", false);
@@ -56,7 +55,6 @@ angular.module("ngDragDrop",[])
                 if (angular.isString(attrs.dragHandleClass)) {
                     isDragHandleUsed = true;
                     dragHandleClass = attrs.dragHandleClass.trim() || "drag-handle";
-                    dragHandles = element.find('.' + dragHandleClass).toArray();
 
                     element.bind("mousedown", function (e) {
                         dragTarget = e.target;
@@ -89,7 +87,7 @@ angular.module("ngDragDrop",[])
                 element.bind("dragend", dragendHandler);
 
                 element.bind("dragstart", function (e) {
-                    var isDragAllowed = !isDragHandleUsed || -1 != dragHandles.indexOf(dragTarget);
+                    var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
 
                     if (isDragAllowed) {
                         var sendChannel = attrs.dragChannel || "defaultchannel";
