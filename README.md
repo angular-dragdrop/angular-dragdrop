@@ -1,4 +1,5 @@
 #Angular-DragDrop
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ganarajpr/angular-dragdrop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Angular-DragDrop is a native HTML5 Drag and Drop directive written in pure Angular with no dependency on Jquery. 
 
