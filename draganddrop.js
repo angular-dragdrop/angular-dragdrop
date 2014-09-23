@@ -32,6 +32,7 @@ angular.module("ngDragDrop",[])
                 var dragData = "",
                     isDragHandleUsed = false,
                     dragHandleClass,
+                    draggingClass = attrs.draggingClass || "on-dragging",
                     dragTarget;
 
                 element.attr("draggable", false);
@@ -82,6 +83,7 @@ angular.module("ngDragDrop",[])
                             }
                         }
                     }
+                    element.removeClass(draggingClass);
                 }
 
                 element.bind("dragend", dragendHandler);
@@ -94,6 +96,7 @@ angular.module("ngDragDrop",[])
                         var sendData = angular.toJson({ data: dragData, channel: sendChannel });
                         var dragImage = attrs.dragImage || null;
 
+                        element.addClass(draggingClass);
                         element.bind('$destroy', dragendHandler);
 
                         if (dragImage) {
