@@ -22,7 +22,7 @@ if (window.jQuery && (-1 == window.jQuery.event.props.indexOf("dataTransfer"))) 
 
 var currentData;
 
-angular.module("ngDragDrop",[])
+angular.module("ang-drag-drop",[])
     .directive("uiDraggable", [
         '$parse',
         '$rootScope',
