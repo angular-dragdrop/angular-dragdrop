@@ -153,14 +153,30 @@ angular.module("ang-drag-drop",[])
                 }
 
                 function onDragLeave(e) {
-                  dragging--;
+		  if (e.preventDefault) {
+			e.preventDefault();
+		  }
+		    
+		  if (e.stopPropagation) {
+			e.stopPropagation();
+		  }
+		  dragging--;
+
                   if (dragging == 0) {
                     element.removeClass(dragHoverClass);
                   }
                 }
 
-                function onDragEnter(e) {
-                    dragging++;
+                function onDragEnter(e) {                    
+		    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+		    dragging++;
+
                     $rootScope.$broadcast("ANGULAR_HOVER", dragChannel);
                     element.addClass(dragHoverClass);
                 }
