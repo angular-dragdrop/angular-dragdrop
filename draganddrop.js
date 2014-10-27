@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-(function(){
+(function(angular){
 
 function isDnDsSupported(){
     return 'draggable' in document.createElement("span");
@@ -138,6 +138,8 @@ angular.module("ang-drag-drop",[])
                 var dragChannel = "";
                 var dragEnterClass = attr.dragEnterClass || "on-drag-enter";
                 var dragHoverClass = attr.dragHoverClass || "on-drag-hover";
+                var customDragEnterEvent = $parse(attr.onDragEnter);
+                var customDragLeaveEvent = $parse(attr.onDragLeave);
 
                 function onDragOver(e) {
                     if (e.preventDefault) {
@@ -153,31 +155,37 @@ angular.module("ang-drag-drop",[])
                 }
 
                 function onDragLeave(e) {
-		  if (e.preventDefault) {
-			e.preventDefault();
-		  }
-		    
-		  if (e.stopPropagation) {
-			e.stopPropagation();
-		  }
-		  dragging--;
-
-                  if (dragging == 0) {
-                    element.removeClass(dragHoverClass);
-                  }
-                }
-
-                function onDragEnter(e) {                    
-		    if (e.preventDefault) {
+                    if (e.preventDefault) {
                         e.preventDefault();
                     }
 
                     if (e.stopPropagation) {
                         e.stopPropagation();
                     }
-		    dragging++;
+                    dragging--;
+
+                    if (dragging == 0) {
+                        scope.$apply(function () {
+                            customDragEnterEvent(scope, {$event: e});
+                        });
+                        element.removeClass(dragHoverClass);
+                    }
+                }
+
+                function onDragEnter(e) {
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+
+                    if (e.stopPropagation) {
+                        e.stopPropagation();
+                    }
+                    dragging++;
 
                     $rootScope.$broadcast("ANGULAR_HOVER", dragChannel);
+                    scope.$apply(function () {
+                        customDragLeaveEvent(scope, {$event: e});
+                    });
                     element.addClass(dragHoverClass);
                 }
 
@@ -354,4 +362,4 @@ angular.module("ang-drag-drop",[])
         }
     ]);
 
-}());
+}(angular));

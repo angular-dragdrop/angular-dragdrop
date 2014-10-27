@@ -8,7 +8,7 @@
 
 angular.module('app', [
     'hljs',
-    'ngDragDrop'
+    'ang-drag-drop'
 ])
 
 .controller('MainCtrl', function($scope) {
