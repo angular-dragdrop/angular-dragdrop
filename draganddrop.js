@@ -119,7 +119,7 @@ angular.module("ang-drag-drop",[])
                         e.dataTransfer.setData("dataToSend", sendData);
                         currentData = angular.fromJson(sendData);
                         e.dataTransfer.effectAllowed = "copyMove";
-                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, sendData);
+                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, currentData.data);
                     }
                     else {
                         e.preventDefault();
@@ -150,6 +150,11 @@ angular.module("ang-drag-drop",[])
                         e.stopPropagation();
                     }
 
+                    var fn = $parse(attr.uiOnDragOver);
+                    scope.$apply(function () {
+                        fn(scope, {$event: e, $channel: dropChannel});
+                    });
+
                     e.dataTransfer.dropEffect = e.shiftKey ? 'copy' : 'move';
                     return false;
                 }
@@ -170,6 +175,11 @@ angular.module("ang-drag-drop",[])
                         });
                         element.removeClass(dragHoverClass);
                     }
+
+                    var fn = $parse(attr.uiOnDragLeave);
+                    scope.$apply(function () {
+                        fn(scope, {$event: e, $channel: dropChannel});
+                    });
                 }
 
                 function onDragEnter(e) {
@@ -181,6 +191,11 @@ angular.module("ang-drag-drop",[])
                         e.stopPropagation();
                     }
                     dragging++;
+
+                    var fn = $parse(attr.uiOnDragEnter);
+                    scope.$apply(function () {
+                        fn(scope, {$event: e, $channel: dropChannel});
+                    });
 
                     $rootScope.$broadcast("ANGULAR_HOVER", dragChannel);
                     scope.$apply(function () {
