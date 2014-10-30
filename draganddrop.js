@@ -119,7 +119,7 @@ angular.module("ang-drag-drop",[])
                         e.dataTransfer.setData("dataToSend", sendData);
                         currentData = angular.fromJson(sendData);
                         e.dataTransfer.effectAllowed = "copyMove";
-                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, sendData);
+                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, currentData.data);
                     }
                     else {
                         e.preventDefault();
