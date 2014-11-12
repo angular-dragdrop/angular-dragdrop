@@ -71,13 +71,13 @@ angular.module("ang-drag-drop",[])
                     if (e.dataTransfer && e.dataTransfer.dropEffect !== "none") {
                         if (attrs.onDropSuccess) {
                             var fn = $parse(attrs.onDropSuccess);
-                            scope.$apply(function () {
+                            scope.$evalAsync(function () {
                                 fn(scope, {$event: e});
                             });
                         } else {
                             if (attrs.onDropFailure) {
                                 var fn = $parse(attrs.onDropFailure);
-                                scope.$apply(function () {
+                                scope.$evalAsync(function () {
                                     fn(scope, {$event: e});
                                 });
                             }
@@ -101,7 +101,7 @@ angular.module("ang-drag-drop",[])
 
                         if (dragImage) {
                             var dragImageFn = $parse(attrs.dragImage);
-                            scope.$apply(function() {
+                            scope.$evalAsync(function() {
                                 var dragImageParameters = dragImageFn(scope, {$event: e});
                                 if (dragImageParameters) {
                                     if (angular.isString(dragImageParameters)) {
@@ -151,7 +151,7 @@ angular.module("ang-drag-drop",[])
                     }
 
                     var fn = $parse(attr.uiOnDragOver);
-                    scope.$apply(function () {
+                    scope.$evalAsync(function () {
                         fn(scope, {$event: e, $channel: dropChannel});
                     });
 
@@ -170,14 +170,14 @@ angular.module("ang-drag-drop",[])
                     dragging--;
 
                     if (dragging == 0) {
-                        scope.$apply(function () {
+                        scope.$evalAsync(function () {
                             customDragEnterEvent(scope, {$event: e});
                         });
                         element.removeClass(dragHoverClass);
                     }
 
                     var fn = $parse(attr.uiOnDragLeave);
-                    scope.$apply(function () {
+                    scope.$evalAsync(function () {
                         fn(scope, {$event: e, $channel: dropChannel});
                     });
                 }
@@ -193,12 +193,12 @@ angular.module("ang-drag-drop",[])
                     dragging++;
 
                     var fn = $parse(attr.uiOnDragEnter);
-                    scope.$apply(function () {
+                    scope.$evalAsync(function () {
                         fn(scope, {$event: e, $channel: dropChannel});
                     });
 
                     $rootScope.$broadcast("ANGULAR_HOVER", dragChannel);
-                    scope.$apply(function () {
+                    scope.$evalAsync(function () {
                         customDragLeaveEvent(scope, {$event: e});
                     });
                     element.addClass(dragHoverClass);
@@ -216,7 +216,7 @@ angular.module("ang-drag-drop",[])
                     sendData = angular.fromJson(sendData);
 
                     var fn = $parse(attr.uiOnDrop);
-                    scope.$apply(function () {
+                    scope.$evalAsync(function () {
                         fn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
                     });
                     element.removeClass(dragEnterClass);
