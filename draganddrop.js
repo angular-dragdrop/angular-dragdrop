@@ -9,10 +9,11 @@
 (function(angular){
 
 function isDnDsSupported(){
-    return 'draggable' in document.createElement("span");
+    return 'ondrag' in document.createElement("a");
 }
 
 if(!isDnDsSupported()){
+    angular.module("ang-drag-drop", []);
     return;
 }
 
