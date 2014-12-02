@@ -30,8 +30,7 @@ angular.module("ang-drag-drop",[])
         '$dragImage',
         function ($parse, $rootScope, $dragImage) {
             return function (scope, element, attrs) {
-                var dragData = "",
-                    isDragHandleUsed = false,
+                var isDragHandleUsed = false,
                     dragHandleClass,
                     draggingClass = attrs.draggingClass || "on-dragging",
                     dragTarget;
@@ -47,12 +46,6 @@ angular.module("ang-drag-drop",[])
                     }
 
                 });
-
-                if (attrs.drag) {
-                    scope.$watch(attrs.drag, function (newValue) {
-                        dragData = newValue || "";
-                    });
-                }
 
                 if (angular.isString(attrs.dragHandleClass)) {
                     isDragHandleUsed = true;
@@ -93,7 +86,11 @@ angular.module("ang-drag-drop",[])
                     var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
 
                     if (isDragAllowed) {
-                        var sendChannel = attrs.dragChannel || "defaultchannel";
+                        var sendChannel = attrs.dragChannel || "defaultchannel";                        
+                        var dragData = "";
+                        if (attrs.drag) {
+                        	dragData = scope.$eval(attrs.drag);
+                        }
                         var sendData = angular.toJson({ data: dragData, channel: sendChannel });
                         var dragImage = attrs.dragImage || null;
 
