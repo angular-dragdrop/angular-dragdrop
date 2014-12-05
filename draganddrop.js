@@ -80,49 +80,51 @@ angular.module("ang-drag-drop",[])
                     element.removeClass(draggingClass);
                 }
 
+	            function dragstartHandler(e) {
+		            var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
+
+		            if (isDragAllowed) {
+			            var sendChannel = attrs.dragChannel || "defaultchannel";
+			            var dragData = "";
+			            if (attrs.drag) {
+				            dragData = scope.$eval(attrs.drag);
+			            }
+			            var sendData = angular.toJson({ data: dragData, channel: sendChannel });
+			            var dragImage = attrs.dragImage || null;
+
+			            element.addClass(draggingClass);
+			            element.bind('$destroy', dragendHandler);
+
+			            if (dragImage) {
+				            var dragImageFn = $parse(attrs.dragImage);
+				            scope.$apply(function() {
+					            var dragImageParameters = dragImageFn(scope, {$event: e});
+					            if (dragImageParameters) {
+						            if (angular.isString(dragImageParameters)) {
+							            dragImageParameters = $dragImage.generate(dragImageParameters);
+						            }
+						            if (dragImageParameters.image) {
+							            var xOffset = dragImageParameters.xOffset || 0,
+							                yOffset = dragImageParameters.yOffset || 0;
+							            e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+						            }
+					            }
+				            });
+			            }
+
+			            e.dataTransfer.setData("dataToSend", sendData);
+			            currentData = angular.fromJson(sendData);
+			            e.dataTransfer.effectAllowed = "copyMove";
+			            $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, currentData.data);
+		            }
+		            else {
+			            e.preventDefault();
+		            }
+	            }
+
                 element.bind("dragend", dragendHandler);
 
-                element.bind("dragstart", function (e) {
-                    var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
-
-                    if (isDragAllowed) {
-                        var sendChannel = attrs.dragChannel || "defaultchannel";                        
-                        var dragData = "";
-                        if (attrs.drag) {
-                        	dragData = scope.$eval(attrs.drag);
-                        }
-                        var sendData = angular.toJson({ data: dragData, channel: sendChannel });
-                        var dragImage = attrs.dragImage || null;
-
-                        element.addClass(draggingClass);
-                        element.bind('$destroy', dragendHandler);
-
-                        if (dragImage) {
-                            var dragImageFn = $parse(attrs.dragImage);
-                            scope.$evalAsync(function() {
-                                var dragImageParameters = dragImageFn(scope, {$event: e});
-                                if (dragImageParameters) {
-                                    if (angular.isString(dragImageParameters)) {
-                                        dragImageParameters = $dragImage.generate(dragImageParameters);
-                                    }
-                                    if (dragImageParameters.image) {
-                                        var xOffset = dragImageParameters.xOffset || 0,
-                                            yOffset = dragImageParameters.yOffset || 0;
-                                        e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
-                                    }
-                                }
-                            });
-                        }
-
-                        e.dataTransfer.setData("dataToSend", sendData);
-                        currentData = angular.fromJson(sendData);
-                        e.dataTransfer.effectAllowed = "copyMove";
-                        $rootScope.$broadcast("ANGULAR_DRAG_START", sendChannel, currentData.data);
-                    }
-                    else {
-                        e.preventDefault();
-                    }
-                });
+                element.bind("dragstart", dragstartHandler);
             };
         }
     ])
