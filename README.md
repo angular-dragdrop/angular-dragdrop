@@ -17,8 +17,9 @@ Pull requests are welcome.
 
 [Documentation](http://ganarajpr.github.io/angular-dragdrop/)
 
+#Looking for Active Contributors.
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/ganarajpr/angular-dragdrop/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+This repo needs active contributers and maintainers. If you are interested in being one of the people who would like to actively maintain this repo, please let me know. 
 
 
 
