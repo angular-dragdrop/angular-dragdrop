@@ -15,7 +15,7 @@ This implementation is mainly different from the one posted in the blog in the f
 
 Pull requests are welcome.
 
-[Documentation](http://ganarajpr.github.io/angular-dragdrop/)
+[Documentation](http://angular-dragdrop.github.io/angular-dragdrop/)
 
 #Looking for Active Contributors.
 
