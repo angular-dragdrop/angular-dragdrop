@@ -152,7 +152,8 @@
                         setDragElement(e, attrs.dragImageElementId);
                     }
 
-                    var transferDataObject = {data: dragData, channel: sendChannel};
+                    var offset = {x: e.originalEvent.offsetX, y: e.originalEvent.offsetY};
+                    var transferDataObject = {data: dragData, channel: sendChannel, offset: offset};
                     var transferDataText = angular.toJson(transferDataObject);
 
                     e.dataTransfer.setData('text', transferDataText);
@@ -256,11 +257,16 @@
                 var sendData = e.dataTransfer.getData('text');
                 sendData = angular.fromJson(sendData);
 
+                var position = {
+                    x: e.originalEvent.offsetX - sendData.offset.x,
+                    y: e.originalEvent.offsetY - sendData.offset.y
+                };
+
                 determineEffectAllowed(e);
 
                 var uiOnDropFn = $parse(attr.uiOnDrop);
                 scope.$evalAsync(function() {
-                    uiOnDropFn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
+                    uiOnDropFn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel, $position: position});
                 });
                 element.removeClass(dragEnterClass);
                 dragging = 0;
