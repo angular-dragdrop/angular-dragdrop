@@ -310,7 +310,7 @@
             });
 
 
-            scope.$watch(attr.dropChannel, function(value) {
+            attr.$observe('dropChannel', function(value) {
                 if (value) {
                     dropChannel = value;
                 }
