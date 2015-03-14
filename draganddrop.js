@@ -161,6 +161,7 @@
                     scope.$evalAsync(function() {
                         customDragLeaveEvent(scope, {$event: e, $channel: dropChannel});
                     });
+                    element.addClass(dragEnterClass);
                     element.removeClass(dragHoverClass);
                 }
 
@@ -183,6 +184,7 @@
                     scope.$evalAsync(function() {
                         customDragEnterEvent(scope, {$event: e, $channel: dropChannel});
                     });
+                    element.removeClass(dragEnterClass);
                     element.addClass(dragHoverClass);
                 }
                 dragging++;
@@ -293,16 +295,9 @@
                 element.unbind('drop', preventNativeDnD);
             });
 
-
-            var deregisterDragHover = $rootScope.$on('ANGULAR_HOVER', function(e, channel) {
-                element.removeClass(dragHoverClass);
-            });
-
-
             scope.$on('$destroy', function() {
                 deregisterDragStart();
                 deregisterDragEnd();
-                deregisterDragHover();
             });
 
 
