@@ -2,7 +2,7 @@
 [![Build status](http://img.shields.io/travis/angular-dragdrop/angular-dragdrop.svg?style=flat)](https://travis-ci.org/angular-dragdrop/angular-dragdrop)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ganarajpr/angular-dragdrop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Angular-DragDrop is a native HTML5 Drag and Drop directive written in pure Angular with no dependency on Jquery. 
+Angular-DragDrop is a angular HTML5 Drag and Drop directive written in pure with no dependency on JQuery.
 
 This is based on the work done by Jason Turim. While this [blog post](http://jasonturim.wordpress.com/2013/09/01/angularjs-drag-and-drop/) was the inspiration for creating a native Drag and Drop solution, the intention was to create something that was more generic. 
 

@@ -3,9 +3,9 @@
 idea/
 *.zip
 *.tgz
-*.html
 css/
 js/
+demo/
 node_modules/
 Gulpfile.js
 bower.json
