@@ -138,9 +138,9 @@
                     e.stopPropagation();
                 }
 
-                var fn = $parse(attr.uiOnDragOver);
+                var uiOnDragOverFn = $parse(attr.uiOnDragOver);
                 scope.$evalAsync(function() {
-                    fn(scope, {$event: e, $channel: dropChannel});
+                    uiOnDragOverFn(scope, {$event: e, $channel: dropChannel});
                 });
 
                 return false;
@@ -163,9 +163,9 @@
                     element.removeClass(dragHoverClass);
                 }
 
-                var fn = $parse(attr.uiOnDragLeave);
+                var uiOnDragLeaveFn = $parse(attr.uiOnDragLeave);
                 scope.$evalAsync(function() {
-                    fn(scope, {$event: e, $channel: dropChannel});
+                    uiOnDragLeaveFn(scope, {$event: e, $channel: dropChannel});
                 });
             }
 
@@ -186,9 +186,9 @@
                 }
                 dragging++;
 
-                var fn = $parse(attr.uiOnDragEnter);
+                var uiOnDragEnterFn = $parse(attr.uiOnDragEnter);
                 scope.$evalAsync(function() {
-                    fn(scope, {$event: e, $channel: dropChannel});
+                    uiOnDragEnterFn(scope, {$event: e, $channel: dropChannel});
                 });
 
                 $rootScope.$broadcast('ANGULAR_HOVER', dragChannel);
@@ -215,9 +215,9 @@
                     }
                 }
 
-                var fn = $parse(attr.uiOnDrop);
+                var uiOnDropFn = $parse(attr.uiOnDrop);
                 scope.$evalAsync(function() {
-                    fn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
+                    uiOnDropFn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel});
                 });
                 element.removeClass(dragEnterClass);
                 dragging = 0;
