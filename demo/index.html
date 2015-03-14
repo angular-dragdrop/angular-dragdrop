@@ -103,7 +103,7 @@
                         drop-validate="dropValidateHandler($drop, $event, $data)"
                     drag-hover-class="on-drag-hover-custom"
                     on-drop-success="dropSuccessHandler($event,$index,men)"
-                    ui-on-drop="onDrop($event,$data,men)" drop-channel="terrorists1"
+                    ui-on-drop="onDrop($event,$data,men,$index)" drop-channel="terrorists1"
                     ng-repeat="man in men track by $index">
                         {{man}}
                     </li>
@@ -115,7 +115,7 @@
                         drag-channel="terrorists1"
                         drop-validate="dropValidateHandler($drop, $event, $data)"
                     drag-hover-class="on-drag-hover-custom"
-                    ui-on-drop="onDrop($event,$data,women)" drop-channel="terrorists2"
+                    ui-on-drop="onDrop($event,$data,women,$index)" drop-channel="terrorists2"
                     on-drop-success="dropSuccessHandler($event,$index,women)"
                     ng-repeat="woman in women track by $index">
                         {{woman}}

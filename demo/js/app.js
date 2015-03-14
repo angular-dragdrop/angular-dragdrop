@@ -35,8 +35,12 @@ angular.module('app', [
         array.splice(index, 1);
     };
 
-    $scope.onDrop = function($event, $data, array) {
-        array.push($data);
+    $scope.onDrop = function($event, $data, array, index) {
+        if (index !== undefined) {
+            array.splice(index, 0, $data);
+        } else {
+            array.push($data);
+        }
     };
 
 });
