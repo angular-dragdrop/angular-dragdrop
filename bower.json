@@ -1,11 +1,11 @@
 {
   "name": "angular-native-dragdrop",
   "version": "1.0.7",
-  "homepage": "https://github.com/ganarajpr/angular-dragdrop",
+  "homepage": "http://angular-dragdrop.github.io/angular-dragdrop",
   "authors": [
     "ganarajpr"
   ],
-  "description": "A Native ( without jquery ) Drag and Drop directive for AngularJS using HTML5 Drag and Drop.",
+  "description": "Angular HTML5 Drag and Drop directive written in pure with no dependency on JQuery.",
   "main": "draganddrop.js",
   "keywords": [
     "angular",
