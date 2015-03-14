@@ -27,12 +27,16 @@
 
             element.attr('draggable', false);
 
-            attrs.$observe('uiDraggable', function(newValue) {
+            scope.$watch(attrs.uiDraggable, function(newValue) {
                 if (newValue) {
                     element.attr('draggable', newValue);
+                    element.bind('dragend', dragendHandler);
+                    element.bind('dragstart', dragstartHandler);
                 }
                 else {
                     element.removeAttr('draggable');
+                    element.unbind('dragend', dragendHandler);
+                    element.unbind('dragstart', dragstartHandler);
                 }
 
             });
@@ -111,10 +115,6 @@
                     e.preventDefault();
                 }
             }
-
-            element.bind('dragend', dragendHandler);
-
-            element.bind('dragstart', dragstartHandler);
         };
     }
     ]);
@@ -310,7 +310,7 @@
             });
 
 
-            attr.$observe('dropChannel', function(value) {
+            scope.$watch(attr.dropChannel, function(value) {
                 if (value) {
                     dropChannel = value;
                 }
