@@ -87,7 +87,11 @@
                     element.addClass(draggingClass);
                     element.bind('$destroy', dragendHandler);
 
-                    if (dragImage) {
+                    //Code to make sure that the setDragImage is available. IE 10, 11, and Opera do not support setDragImage.
+                    var hasNativeDraggable = !(document.uniqueID || window.opera);
+
+                    //If there is a draggable image passed in, then set the image to be dragged.
+                    if ( dragImage && hasNativeDraggable ) {
                         var dragImageFn = $parse(attrs.dragImage);
                         scope.$apply(function() {
                             var dragImageParameters = dragImageFn(scope, {$event: e});
