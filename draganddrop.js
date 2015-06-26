@@ -4,6 +4,19 @@
     function isDnDsSupported() {
         return 'ondrag' in document.createElement('a');
     }
+	
+	function determineEffectAllowed(e)
+	{
+		// Chrome doesn't set dropEffect, so we have to work it out ourselves
+		if (e.dataTransfer.dropEffect === 'none') {
+			if (e.dataTransfer.effectAllowed === 'copy' ||
+				e.dataTransfer.effectAllowed === 'move') {
+				e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
+			} else if (e.dataTransfer.effectAllowed === 'copyMove' || e.dataTransfer.effectAllowed === 'copymove') {
+				e.dataTransfer.dropEffect = e.ctrlKey ? 'copy' : 'move';
+			}
+		}
+	}
 
     if (!isDnDsSupported()) {
         angular.module('ang-drag-drop', []);
@@ -54,6 +67,9 @@
                 }, 0);
                 var sendChannel = attrs.dragChannel || 'defaultchannel';
                 $rootScope.$broadcast('ANGULAR_DRAG_END', e, sendChannel);
+				
+				determineEffectAllowed(e);
+				
                 if (e.dataTransfer && e.dataTransfer.dropEffect !== 'none') {
                     if (attrs.onDropSuccess) {
                         var onDropSuccessFn = $parse(attrs.onDropSuccess);
@@ -212,15 +228,7 @@
                 var sendData = e.dataTransfer.getData('text');
                 sendData = angular.fromJson(sendData);
 
-                // Chrome doesn't set dropEffect, so we have to work it out ourselves
-                if (e.dataTransfer.dropEffect === 'none') {
-                    if (e.dataTransfer.effectAllowed === 'copy' ||
-                        e.dataTransfer.effectAllowed === 'move') {
-                        e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
-                    } else if (e.dataTransfer.effectAllowed === 'copyMove') {
-                        e.dataTransfer.dropEffect = e.ctrlKey ? 'copy' : 'move';
-                    }
-                }
+                determineEffectAllowed(e);
 
                 var uiOnDropFn = $parse(attr.uiOnDrop);
                 scope.$evalAsync(function() {
@@ -250,7 +258,7 @@
                 e.dataTransfer.dropEffect = 'none';
                 return false;
             }
-
+						
             var deregisterDragStart = $rootScope.$on('ANGULAR_DRAG_START', function(_, e, channel, transferDataObject) {
                 dragChannel = channel;
 
