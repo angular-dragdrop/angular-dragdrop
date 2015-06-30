@@ -4,19 +4,18 @@
     function isDnDsSupported() {
         return 'ondrag' in document.createElement('a');
     }
-	
-	function determineEffectAllowed(e)
-	{
-		// Chrome doesn't set dropEffect, so we have to work it out ourselves
-		if (e.dataTransfer.dropEffect === 'none') {
-			if (e.dataTransfer.effectAllowed === 'copy' ||
-				e.dataTransfer.effectAllowed === 'move') {
-				e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
-			} else if (e.dataTransfer.effectAllowed === 'copyMove' || e.dataTransfer.effectAllowed === 'copymove') {
-				e.dataTransfer.dropEffect = e.ctrlKey ? 'copy' : 'move';
-			}
-		}
-	}
+
+    function determineEffectAllowed(e) {
+        // Chrome doesn't set dropEffect, so we have to work it out ourselves
+        if (e.dataTransfer.dropEffect === 'none') {
+            if (e.dataTransfer.effectAllowed === 'copy' ||
+                e.dataTransfer.effectAllowed === 'move') {
+                e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
+            } else if (e.dataTransfer.effectAllowed === 'copyMove' || e.dataTransfer.effectAllowed === 'copymove') {
+                e.dataTransfer.dropEffect = e.ctrlKey ? 'copy' : 'move';
+            }
+        }
+    }
 
     if (!isDnDsSupported()) {
         angular.module('ang-drag-drop', []);
@@ -67,8 +66,8 @@
                 }, 0);
                 var sendChannel = attrs.dragChannel || 'defaultchannel';
                 $rootScope.$broadcast('ANGULAR_DRAG_END', e, sendChannel);
-				
-				determineEffectAllowed(e);
+
+                determineEffectAllowed(e);
 				
                 if (e.dataTransfer && e.dataTransfer.dropEffect !== 'none') {
                     if (attrs.onDropSuccess) {
