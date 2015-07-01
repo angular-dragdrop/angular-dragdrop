@@ -257,7 +257,7 @@
                 e.dataTransfer.dropEffect = 'none';
                 return false;
             }
-						
+            
             var deregisterDragStart = $rootScope.$on('ANGULAR_DRAG_START', function(_, e, channel, transferDataObject) {
                 dragChannel = channel;
 
