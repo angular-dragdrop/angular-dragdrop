@@ -68,7 +68,7 @@
                 $rootScope.$broadcast('ANGULAR_DRAG_END', e, sendChannel);
 
                 determineEffectAllowed(e);
-				
+
                 if (e.dataTransfer && e.dataTransfer.dropEffect !== 'none') {
                     if (attrs.onDropSuccess) {
                         var onDropSuccessFn = $parse(attrs.onDropSuccess);
@@ -106,7 +106,7 @@
                     var hasNativeDraggable = !(document.uniqueID || window.opera);
 
                     //If there is a draggable image passed in, then set the image to be dragged.
-                    if ( dragImage && hasNativeDraggable ) {
+                    if (dragImage && hasNativeDraggable) {
                         var dragImageFn = $parse(attrs.dragImage);
                         scope.$apply(function() {
                             var dragImageParameters = dragImageFn(scope, {$event: e});
@@ -257,7 +257,7 @@
                 e.dataTransfer.dropEffect = 'none';
                 return false;
             }
-            
+
             var deregisterDragStart = $rootScope.$on('ANGULAR_DRAG_START', function(_, e, channel, transferDataObject) {
                 dragChannel = channel;
 
@@ -269,7 +269,12 @@
 
                 if (valid && attr.dropValidate) {
                     var validateFn = $parse(attr.dropValidate);
-                    valid = validateFn(scope, {$drop: {scope: scope, element:element}, $event:e, $data: transferDataObject.data, $channel: transferDataObject.channel});
+                    valid = validateFn(scope, {
+                        $drop: {scope: scope, element: element},
+                        $event: e,
+                        $data: transferDataObject.data,
+                        $channel: transferDataObject.channel
+                    });
                 }
 
                 if (valid) {
