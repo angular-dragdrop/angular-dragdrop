@@ -123,7 +123,7 @@
                         });
                     }
 
-                    var transferDataObject = {data: dragData, channel: sendChannel}
+                    var transferDataObject = {data: dragData, channel: sendChannel};
                     var transferDataText = angular.toJson(transferDataObject);
 
                     e.dataTransfer.setData('text', transferDataText);
@@ -296,7 +296,7 @@
             });
 
 
-            var deregisterDragEnd = $rootScope.$on('ANGULAR_DRAG_END', function(_, e, channel) {
+            var deregisterDragEnd = $rootScope.$on('ANGULAR_DRAG_END', function() {
                 element.unbind('dragover', onDragOver);
                 element.unbind('dragenter', onDragEnter);
                 element.unbind('dragleave', onDragLeave);
