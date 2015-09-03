@@ -87,6 +87,33 @@
                 element.removeClass(draggingClass);
             }
 
+            function setDragElement(e, dragImageElementId) {
+                var dragImageElementFn;
+
+                if (!(e && e.dataTransfer && e.dataTransfer.setDragImage)) {
+                    return;
+                }
+
+                dragImageElementFn = $parse(dragImageElementId);
+
+                scope.$apply(function() {
+                    var elementId = dragImageElementFn(scope, {$event: e}),
+                        dragElement;
+
+                    if (!(elementId && angular.isString(elementId))) {
+                        return;
+                    }
+
+                    dragElement = document.getElementById(elementId);
+
+                    if (!dragElement) {
+                        return;
+                    }
+
+                    e.dataTransfer.setDragImage(dragElement, 0, 0);
+                });
+            }
+
             function dragstartHandler(e) {
                 var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
 
@@ -121,6 +148,8 @@
                                 }
                             }
                         });
+                    } else if (attrs.dragImageElementId) {
+                        setDragElement(e, attrs.dragImageElementId);
                     }
 
                     var transferDataObject = {data: dragData, channel: sendChannel};
