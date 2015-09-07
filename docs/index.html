@@ -64,6 +64,14 @@
         <strong>NOTE</strong>: If attribute is not present drag handle feature is not active.
     </div>
     <hr>
+    <h4 class="text-info"><em>drag-image-element-id</em></h4>
+
+    <p>The <code>drag-image-element-id</code> attribute takes a function that returns the id of a custom drag image that
+        is another element on the page.</p>
+    <div>
+        <strong>NOTE</strong>: If attribute is not present the browser's default drag image will be used.
+    </div>
+    <hr>
     <h4 class="text-info"><em>on-drop-success</em></h4>
 
     <p>The <code>on-drop-success</code> attribute takes a function. We can consider this to be an on-drop-success
@@ -105,6 +113,7 @@
         <ANY ui-draggable="{expression}"
              drag="dragData"
              drag-handle-class="my-drag-handle"
+             drag-image-element-id="getCustomDragImageElementId()"
              on-drop-success="onDropSuccessHandler($event)"
              on-drop-failure="onDropFailureHandler($event)"
              drag-channel="mydropchannel">...
@@ -142,6 +151,14 @@
             <td>Class name used to mark child elements of draggable object to be used as drag handle. <br/>If attribute
                 is not present drag handle feature is not used. <br/>If attribute is present but have no value
                 <code>drag-handle</code> used as default.</td>
+        </tr>
+        <tr>
+            <td>drag-image-element-id</td>
+            <td><label class="text-muted">function</label></td>
+            <td>Function which returns the id of another element on the page to use as drag image. <br/>If attribute
+                is not present the browser's default drag image is used. You can use the
+                <a href="http://www.kryogenix.org/code/browser/custom-drag-image.html" target="_blank">ghost image</a>
+                technique for creating custom drag image that is not visible to the user.</td>
         </tr>
         <tr>
             <td>on-drop-success</td>
