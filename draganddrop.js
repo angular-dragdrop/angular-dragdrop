@@ -179,6 +179,22 @@
             var customDragEnterEvent = $parse(attr.onDragEnter);
             var customDragLeaveEvent = $parse(attr.onDragLeave);
 
+            function calculateDropOffset(e) {
+                var offset = {
+                    x: e.originalEvent.offsetX,
+                    y: e.originalEvent.offsetY
+                };
+                var target = e.originalEvent.target;
+
+                while (!target.isSameNode(element[0])) {
+                    offset.x = offset.x + target.offsetLeft;
+                    offset.y = offset.y + target.offsetTop;
+                    target = target.offsetParent;
+                }
+                
+                return offset;
+            }
+
             function onDragOver(e) {
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
@@ -274,22 +290,6 @@
                 dragging = 0;
             }
             
-            function calculateDropOffset(e) {
-                var offset = {
-                    x: e.originalEvent.offsetX,
-                    y: e.originalEvent.offsetY
-                };
-                var target = e.originalEvent.target;
-
-                while (!target.isSameNode(element[0])) {
-                    offset.x = offset.x + target.offsetLeft;
-                    offset.y = offset.y + target.offsetTop;
-                    target = target.offsetParent;
-                };
-                
-                return offset;
-            }
-
             function isDragChannelAccepted(dragChannel, dropChannel) {
                 if (dropChannel === '*') {
                     return true;
