@@ -257,11 +257,13 @@
                 var sendData = e.dataTransfer.getData('text');
                 sendData = angular.fromJson(sendData);
 
+                var dropOffset = calculateDropOffset(e);
+                
                 var position = {
-                    x: e.originalEvent.offsetX - sendData.offset.x,
-                    y: e.originalEvent.offsetY - sendData.offset.y
+                    x: dropOffset.x - sendData.offset.x,
+                    y: dropOffset.y - sendData.offset.y
                 };
-
+                
                 determineEffectAllowed(e);
 
                 var uiOnDropFn = $parse(attr.uiOnDrop);
@@ -270,6 +272,22 @@
                 });
                 element.removeClass(dragEnterClass);
                 dragging = 0;
+            }
+            
+            function calculateDropOffset(e) {
+                var offset = {
+                    x: e.originalEvent.offsetX,
+                    y: e.originalEvent.offsetY
+                };
+                var target = e.originalEvent.target;
+
+                while (!target.isSameNode(element[0])) {
+                    offset.x = offset.x + target.offsetLeft;
+                    offset.y = offset.y + target.offsetTop;
+                    target = target.offsetParent;
+                };
+                
+                return offset;
             }
 
             function isDragChannelAccepted(dragChannel, dropChannel) {
