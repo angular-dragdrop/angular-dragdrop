@@ -75,13 +75,13 @@
                         scope.$evalAsync(function() {
                             onDropSuccessFn(scope, {$event: e});
                         });
-                    } else {
-                        if (attrs.onDropFailure) {
-                            var onDropFailureFn = $parse(attrs.onDropFailure);
-                            scope.$evalAsync(function() {
-                                onDropFailureFn(scope, {$event: e});
-                            });
-                        }
+                    }
+                }else if (e.dataTransfer && e.dataTransfer.dropEffect === 'none'){
+                    if (attrs.onDropFailure) {
+                        var onDropFailureFn = $parse(attrs.onDropFailure);
+                        scope.$evalAsync(function() {
+                            onDropFailureFn(scope, {$event: e});
+                        });
                     }
                 }
                 element.removeClass(draggingClass);

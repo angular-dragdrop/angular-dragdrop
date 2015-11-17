@@ -45,6 +45,7 @@
                     drop-validate="dropValidateHandler($drop, $event, $data)">
                     <li ui-draggable="true" drag="woman" drag-channel="beasts"
                         on-drop-success="dropSuccessHandler($event,$index,women)"
+                        on-drop-failure="dropFailureHandler($event,$index,women)"
                         ng-repeat="woman in women track by $index">
                         {{woman}}
                     </li>
