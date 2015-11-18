@@ -35,6 +35,10 @@ angular.module('app', [
         array.splice(index, 1);
     };
 
+    $scope.dropFailureHandler = function($event, index, array) {
+        alert(array[index] + ' could be dropped into left list!')
+    };
+
     $scope.onDrop = function($event, $data, array, index) {
         if (index !== undefined) {
             array.splice(index, 0, $data);
