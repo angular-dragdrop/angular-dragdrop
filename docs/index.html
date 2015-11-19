@@ -216,7 +216,9 @@
         <strong>NOTE</strong> : This callback function is only called when the drop succeeds.
     </div>
     The <code>ui-on-drop</code> callback can request additional parameters. The data that is dragged is available to the
-    callback as <code>$data</code> and its channel as <code>$channel</code>. Apart from this the drop event is exposed as <code>$event</code>.
+    callback as <code>$data</code> and its channel as <code>$channel</code>. The x, y coordinates of (the top left
+    corner of) the dropped element within the drop site is available as <code>$position</code>. Apart from this the drop
+    event is exposed as <code>$event</code>.
     </p>
     <h3 class="heading"><strong>Additional Attributes</strong></h3>
 
@@ -262,7 +264,7 @@
     <p>
 
     <div hljs>
-        <ANY ui-on-drop="onDrop($data,$channel,$event)" drop-channel="mydropchannel" drag-enter-class="dragEnter">...</ANY>
+        <ANY ui-on-drop="onDrop($data,$channel,$position,$event)" drop-channel="mydropchannel" drag-enter-class="dragEnter">...</ANY>
     </div>
     </p>
 
@@ -281,8 +283,8 @@
         <tr>
             <td>ui-on-drop</td>
             <td><label class="text-muted">function</label></td>
-            <td>Takes any <code>$scope</code> function. Can also pass <code>$event</code>, <code>$data</code> and <code>$channel</code>.
-            </td>
+            <td>Takes any <code>$scope</code> function. Can also pass <code>$event</code>, <code>$data</code>,
+            <code>$channel</code> and <code>$position</code>.</td>
         </tr>
         <tr>
             <td>drop-channel</td>
