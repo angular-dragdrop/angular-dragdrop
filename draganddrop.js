@@ -189,9 +189,13 @@
                 while (!target.isSameNode(element[0])) {
                     offset.x = offset.x + target.offsetLeft;
                     offset.y = offset.y + target.offsetTop;
+
                     target = target.offsetParent;
+                    if (!target) {
+                        return null;
+                    }
                 }
-                
+
                 return offset;
             }
 
@@ -275,10 +279,10 @@
 
                 var dropOffset = calculateDropOffset(e);
                 
-                var position = {
+                var position = dropOffset ? {
                     x: dropOffset.x - sendData.offset.x,
                     y: dropOffset.y - sendData.offset.y
-                };
+                } : null;
                 
                 determineEffectAllowed(e);
 
