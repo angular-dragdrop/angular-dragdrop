@@ -186,7 +186,7 @@
                 };
                 var target = e.originalEvent.target;
 
-                while (!target.isSameNode(element[0])) {
+                while (target !== element[0]) {
                     offset.x = offset.x + target.offsetLeft;
                     offset.y = offset.y + target.offsetTop;
 
