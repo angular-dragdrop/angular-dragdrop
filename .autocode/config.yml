@@ -1,0 +1,7 @@
+name: angular-dragdrop/angular-dragdrop
+author:
+  name: Ganaraj P R
+  email: ganarajpr@gmail.com
+  url: 'http://www.dhi.io'
+copyright: 2015 Ganaraj P R
+description: Angular HTML5 Drag and Drop directive written in pure with no dependency on JQuery.
