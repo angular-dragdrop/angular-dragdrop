@@ -6,6 +6,7 @@ idea/
 css/
 js/
 demo/
+site/
 node_modules/
 Gulpfile.js
 bower.json

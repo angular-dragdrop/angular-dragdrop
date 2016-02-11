@@ -1,4 +1,6 @@
 node_modules/
 bower_components/
+site/
+.python-version
 *.zip
 *.tgz
