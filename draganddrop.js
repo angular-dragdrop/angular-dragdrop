@@ -152,7 +152,7 @@
                         setDragElement(e, attrs.dragImageElementId);
                     }
 
-                    var offset = {x: e.originalEvent.offsetX, y: e.originalEvent.offsetY};
+                    var offset = {x: e.offsetX, y: e.offsetY};
                     var transferDataObject = {data: dragData, channel: sendChannel, offset: offset};
                     var transferDataText = angular.toJson(transferDataObject);
 
@@ -181,10 +181,10 @@
 
             function calculateDropOffset(e) {
                 var offset = {
-                    x: e.originalEvent.offsetX,
-                    y: e.originalEvent.offsetY
+                    x: e.offsetX,
+                    y: e.offsetY
                 };
-                var target = e.originalEvent.target;
+                var target = e.target;
 
                 while (target !== element[0]) {
                     offset.x = offset.x + target.offsetLeft;
