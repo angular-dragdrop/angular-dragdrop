@@ -6,6 +6,10 @@
     }
 
     function determineEffectAllowed(e) {
+        if(e.originalEvent) {
+          e.dataTransfer = e.originalEvent.dataTransfer;
+        }
+
         // Chrome doesn't set dropEffect, so we have to work it out ourselves
         if (typeof e.dataTransfer !== 'undefined' && e.dataTransfer.dropEffect === 'none') {
             if (e.dataTransfer.effectAllowed === 'copy' ||
@@ -20,10 +24,6 @@
     if (!isDnDsSupported()) {
         angular.module('ang-drag-drop', []);
         return;
-    }
-
-    if (window.jQuery && (-1 === window.jQuery.event.props.indexOf('dataTransfer'))) {
-        window.jQuery.event.props.push('dataTransfer');
     }
 
     var module = angular.module('ang-drag-drop', []);
@@ -61,6 +61,10 @@
             }
 
             function dragendHandler(e) {
+                if(e.originalEvent) {
+                  e.dataTransfer = e.originalEvent.dataTransfer;
+                }
+
                 setTimeout(function() {
                     element.unbind('$destroy', dragendHandler);
                 }, 0);
@@ -90,8 +94,8 @@
             function setDragElement(e, dragImageElementId) {
                 var dragImageElementFn;
 
-                if (!(e && e.dataTransfer && e.dataTransfer.setDragImage)) {
-                    return;
+                if(e.originalEvent) {
+                  e.dataTransfer = e.originalEvent.dataTransfer;
                 }
 
                 dragImageElementFn = $parse(dragImageElementId);
@@ -115,6 +119,10 @@
             }
 
             function dragstartHandler(e) {
+                if(e.originalEvent) {
+                  e.dataTransfer = e.originalEvent.dataTransfer;
+                }
+
                 var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
 
                 if (isDragAllowed) {
@@ -267,6 +275,10 @@
             }
 
             function onDrop(e) {
+                if(e.originalEvent) {
+                  e.dataTransfer = e.originalEvent.dataTransfer;
+                }
+
                 if (e.preventDefault) {
                     e.preventDefault(); // Necessary. Allows us to drop.
                 }
@@ -305,6 +317,10 @@
             }
 
             function preventNativeDnD(e) {
+                if(e.originalEvent) {
+                  e.dataTransfer = e.originalEvent.dataTransfer;
+                }
+
                 if (e.preventDefault) {
                     e.preventDefault();
                 }
