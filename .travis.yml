@@ -1,7 +1,14 @@
 language: node_js
 node_js:
-  - '0.10'
+- '0.10'
 before_script:
-  - 'npm install -g gulp'
+- npm install -g gulp
 script:
-  - 'npm test'
+- npm test
+deploy:
+  api_key: 
+  email: your@emailhere.com
+  provider: npm
+env:
+  global:
+    secure: c+ji1pRVvTDAk8vD5uin+mXla7DRLbaUdbwxJtw/FVbHJUN4+XPBhhLAMoLcrwXZ6neufhnfPgP7ErY++3J1zlreB4Pf6cZj8D4CHlAWBEclXNF1HEjqzvSgfesTkgJS54Q0yXR1i6oe11kHtSdex/swLJaTRyxbFR4p+UqwXn8=
