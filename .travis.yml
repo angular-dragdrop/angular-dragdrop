@@ -6,9 +6,13 @@ before_script:
 script:
 - npm test
 deploy:
-  api_key: 
-  email: your@emailhere.com
   provider: npm
+  email: ganarajpr@gmail.com
+  api_key:
+    secure: cm39a+N4fptKxwIzVZGMNkNh0nAIod0mfteRy1NhFrLvRBLZc5MqgBFdrR7xUYGVV8oQG0gqYLGAc0316bW2hlxgqyieFgqeIZmt2/RK96dG2cv/NbhU8xjFNKKtQoxoX64s5hUJjJMw5lwjKWemxQNnUDRrrFECnX7bJOVZ48U=
+  on:
+    tags: true
+    repo: angular-dragdrop/angular-dragdrop
 env:
   global:
     secure: c+ji1pRVvTDAk8vD5uin+mXla7DRLbaUdbwxJtw/FVbHJUN4+XPBhhLAMoLcrwXZ6neufhnfPgP7ErY++3J1zlreB4Pf6cZj8D4CHlAWBEclXNF1HEjqzvSgfesTkgJS54Q0yXR1i6oe11kHtSdex/swLJaTRyxbFR4p+UqwXn8=
