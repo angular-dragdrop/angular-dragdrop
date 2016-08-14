@@ -9,8 +9,6 @@ angular.module('app', [
         'Ernie',
         'Mike (Locked)'
     ];
-
-
     $scope.women = [
         'Jane',
         'Jill',
@@ -49,6 +47,6 @@ angular.module('app', [
 
     $scope.getCustomDragElementId = function (index) {
         return 'customDrag' + (index % 2);
-    }
+    };
 
 });

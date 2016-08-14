@@ -4,3 +4,4 @@ site/
 .python-version
 *.zip
 *.tgz
+.idea/
