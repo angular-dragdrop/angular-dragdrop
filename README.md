@@ -1,4 +1,4 @@
-#Angular-DragDrop
+# Angular-DragDrop
 [![npm version](http://img.shields.io/npm/v/angular-native-dragdrop.svg?style=flat)](https://npmjs.org/package/angular-native-dragdrop) 
 [![Build status](http://img.shields.io/travis/angular-dragdrop/angular-dragdrop.svg?style=flat)](https://travis-ci.org/angular-dragdrop/angular-dragdrop)
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/ganarajpr/angular-dragdrop?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -19,7 +19,7 @@ Pull requests are welcome.
 
 [Documentation](http://angular-dragdrop.github.io/angular-dragdrop/)
 
-#Looking for Active Contributors.
+# Looking for Active Contributors.
 
 This repo needs active contributers and maintainers. If you are interested in being one of the people who would like to actively maintain this repo, please let me know. 
 
