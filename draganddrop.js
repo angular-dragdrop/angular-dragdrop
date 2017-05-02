@@ -166,6 +166,16 @@
 
                     e.dataTransfer.setData('text', transferDataText);
                     e.dataTransfer.effectAllowed = 'copyMove';
+                    
+                    
+                    if (attrs.onDragStart) {
+                        var onDragStartFn = $parse(attrs.onDragStart);
+                        scope.$evalAsync(function () {
+                            onDragStartFn(scope, {
+                                $event: e
+                            });
+                        });
+                    }
 
                     $rootScope.$broadcast('ANGULAR_DRAG_START', e, sendChannel, transferDataObject);
                 }
