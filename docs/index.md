@@ -3,15 +3,15 @@
 
 ---
 
-##ui-draggable(expression)
+## ui-draggable(expression)
 
 Directive in module ang-drag-drop (since 1.0.5 - old module name ngDragDrop)
 
 The ui-draggable attribute tells Angular that the element is draggable. ui-draggable takes an expression as the attribute value. The expression should evaluate to either true or false. You can toggle the draggability of an element using this expression.
 
-###Additional Attributes
+### Additional Attributes
 
-####_**drag**_(variable)
+#### _**drag**_(variable)
 
 The class used to mark child elements of draggable object to be used as drag handle. Default class name is `drag-handle`
 
@@ -19,14 +19,14 @@ The class used to mark child elements of draggable object to be used as drag han
 
 
 
-####_**drag-handle-class**_(string)
+#### _**drag-handle-class**_(string)
 
 The `drag` property is used to assign the data that needs to be passed along with the dragging element.
 
 
 
 
-####_**on-drop-success**_(function)
+#### _**on-drop-success**_(function)
 
 The `on-drop-success` attribute takes a function. We can consider this to be an on-drop-success handler function. This can be useful if you need to do some post processing after the dragged element is dropped successfully on the drop site.
 
@@ -35,7 +35,7 @@ You can request the `drag-end` event ( very similiar to requesting the click eve
 
 
 
-####_**on-drop-failure**_(function)
+#### _**on-drop-failure**_(function)
 
 The `on-drop-failure` attribute takes a function. We can consider this to be an on-drop-failure handler function. This can be useful if you need to do some post processing after the dragged element is dropped unsuccessfully on any drop site.
 
@@ -44,7 +44,7 @@ You can request the `drag-end` event ( very similiar to requesting the click eve
 
 
 
-####_**drag-channel**_(string)
+#### _**drag-channel**_(string)
 
 The `on-drop-failure` attribute takes a function. We can consider this to be an on-drop-failure handler function. This can be useful if you need to do some post processing after the dragged element is dropped unsuccessfully on any drop site.
 
@@ -53,11 +53,11 @@ You can request the `drag-end` event ( very similiar to requesting the click eve
 
 
 
-###Usage
+### Usage
 
 
 
-###Events
+### Events
 
 On start of dragging an Angular Event `ANGULAR_DRAG_START` is dispatched from the `$rootScope`. The event also carries carries the information about the channel in which the dragging has started.
 
@@ -67,7 +67,7 @@ When hovering a draggable element on top of a drop area an Angular Event `ANGULA
 
 ---
 
-##ui-on-drop(expression)
+## ui-on-drop(expression)
 
 Directive in module ang-drag-drop (since 1.0.5 - old module name ngDragDrop)
 
@@ -76,9 +76,9 @@ The `ui-on-drop` attribute tells Angular that the element is a drop site. `ui-on
 **NOTE** : This callback function is only called when the drop succeeds.
 The `ui-on-drop` callback can request additional parameters. The data that is dragged is available to the callback as $data and its channel as `$channel`. Apart from this the drop event is exposed as `$event`.
 
-###Additional Attributes
+### Additional Attributes
 
-####_**drop-channel**_(variable)
+#### _**drop-channel**_(variable)
 
 The channel that the drop site accepts. The dragged element should have the same channel as this drop site for it to be droppable at this location. It is possible to provide comma separated list of channels.
 
@@ -86,7 +86,7 @@ The channel that the drop site accepts. The dragged element should have the same
 
 
 
-####_**drop-validate**_(function)
+#### _**drop-validate**_(function)
 
 Extra validation that makes sure that the drop site accepts the dragged element beyond having the same channel. If not defined, no extra validation is made.
 
@@ -95,23 +95,23 @@ Extra validation that makes sure that the drop site accepts the dragged element 
 
 
 
-####_**drag-enter-class**_(string)
+#### _**drag-enter-class**_(string)
 
 The class that will be added to the the droppable element when a dragged element ( which is droppable ) enters the drop location. The default value for this is `on-drag-enter`
 
 
 
-####_**drag-hover-class**_(string)
+#### _**drag-hover-class**_(string)
 
 The class that will be added to the drop area element when hovering with an element. The default value for this is `on-drag-hover`
 
 
 
-###Usage
+### Usage
 
 
 
-###Events
+### Events
 
 On start of dragging an Angular Event `ANGULAR_DRAG_START` is dispatched from the `$rootScope`. The event also carries carries the information about the channel in which the dragging has started.
 

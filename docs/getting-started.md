@@ -1,9 +1,9 @@
-#Installation
+# Installation
 
-##Download
+## Download
 Download the file [**draganddrop.min.js**](https://raw.githubusercontent.com/angular-dragdrop/angular-dragdrop/master/draganddrop.min.js) or [**draganddrop.js**](https://raw.githubusercontent.com/angular-dragdrop/angular-dragdrop/master/draganddrop.js).
 
-##Bower
+## Bower
 
 You can also install via Bower using
 
@@ -11,16 +11,16 @@ You can also install via Bower using
 
 ---
 
-#Usage
+# Usage
 
-##Step - 1 **Add script**
+## Step - 1 **Add script**
 ```
 <script src="path/to/draganddrop.min.js"></script>
 ```
 
-##Step - 2 **Include in app**
+## Step - 2 **Include in app**
 ```
 	myApp = angular.module('myApp','ang-drag-drop');
 ```
 
-##Step - 3 ***Profit!!***
+## Step - 3 ***Profit!!***
