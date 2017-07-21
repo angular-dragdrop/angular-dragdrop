@@ -166,8 +166,8 @@
 
                     e.dataTransfer.setData('text', transferDataText);
                     e.dataTransfer.effectAllowed = 'copyMove';
-                    
-                    
+
+
                     if (attrs.onDragStart) {
                         var onDragStartFn = $parse(attrs.onDragStart);
                         scope.$evalAsync(function () {
@@ -226,10 +226,12 @@
                     e.stopPropagation();
                 }
 
-                var uiOnDragOverFn = $parse(attr.uiOnDragOver);
-                scope.$evalAsync(function() {
-                    uiOnDragOverFn(scope, {$event: e, $channel: dropChannel});
-                });
+                if (attr.uiOnDragOver) {
+                    var uiOnDragOverFn = $parse(attr.uiOnDragOver);
+                    scope.$evalAsync(function() {
+                        uiOnDragOverFn(scope, {$event: e, $channel: dropChannel});
+                    });
+                }
 
                 return false;
             }
@@ -252,10 +254,12 @@
                     element.removeClass(dragHoverClass);
                 }
 
-                var uiOnDragLeaveFn = $parse(attr.uiOnDragLeave);
-                scope.$evalAsync(function() {
-                    uiOnDragLeaveFn(scope, {$event: e, $channel: dropChannel});
-                });
+                if (attr.uiOnDragLeave) {
+                    var uiOnDragLeaveFn = $parse(attr.uiOnDragLeave);
+                    scope.$evalAsync(function() {
+                        uiOnDragLeaveFn(scope, {$event: e, $channel: dropChannel});
+                    });
+                }
             }
 
             function onDragEnter(e) {
@@ -276,10 +280,12 @@
                 }
                 dragging++;
 
-                var uiOnDragEnterFn = $parse(attr.uiOnDragEnter);
-                scope.$evalAsync(function() {
-                    uiOnDragEnterFn(scope, {$event: e, $channel: dropChannel});
-                });
+                if (attr.uiOnDragEnter) {
+                    var uiOnDragEnterFn = $parse(attr.uiOnDragEnter);
+                    scope.$evalAsync(function() {
+                        uiOnDragEnterFn(scope, {$event: e, $channel: dropChannel});
+                    });
+                }
 
                 $rootScope.$broadcast('ANGULAR_HOVER', dragChannel);
             }
@@ -300,12 +306,12 @@
                 sendData = angular.fromJson(sendData);
 
                 var dropOffset = calculateDropOffset(e);
-                
+
                 var position = dropOffset ? {
                     x: dropOffset.x - sendData.offset.x,
                     y: dropOffset.y - sendData.offset.y
                 } : null;
-                
+
                 determineEffectAllowed(e);
 
                 var uiOnDropFn = $parse(attr.uiOnDrop);
@@ -315,7 +321,7 @@
                 element.removeClass(dragEnterClass);
                 dragging = 0;
             }
-            
+
             function isDragChannelAccepted(dragChannel, dropChannel) {
                 if (dropChannel === '*') {
                     return true;
