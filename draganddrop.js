@@ -196,6 +196,7 @@
             var dragHoverClass = attr.dragHoverClass || 'on-drag-hover';
             var customDragEnterEvent = $parse(attr.onDragEnter);
             var customDragLeaveEvent = $parse(attr.onDragLeave);
+            var uiOnDragOverFn = $parse(attr.uiOnDragOver);
 
             function calculateDropOffset(e) {
                 var offset = {
@@ -227,7 +228,6 @@
                 }
 
                 if (attr.uiOnDragOver) {
-                    var uiOnDragOverFn = $parse(attr.uiOnDragOver);
                     scope.$evalAsync(function() {
                         uiOnDragOverFn(scope, {$event: e, $channel: dropChannel});
                     });
